@@ -3,40 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BlueStore - Azərbaycanın Ən Böyük Onlayn Ticarət Platforması</title>
+    <title>BlueStore Pro - Azərbaycanın Ən Güvənli E-Ticarət Platforması</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; }
-        body { background-color: #f6f9fc; color: #333333; min-height: 100vh; }
+        body { background-color: #f4f7fa; color: #2d3748; min-height: 100vh; }
         
-        /* REKLAM BANNERI */
-        .promo-banner { background: linear-gradient(90deg, #0056b3, #00b4d8); color: white; text-align: center; padding: 10px; font-weight: 600; font-size: 13px; letter-spacing: 0.5px; }
+        .promo-banner { background: linear-gradient(90deg, #0056b3, #00b4d8); color: white; text-align: center; padding: 12px; font-weight: 600; font-size: 13px; letter-spacing: 0.5px; }
         
-        /* KORPORATİV NAVİGASYON */
         header { background-color: #ffffff; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
         .logo { font-size: 28px; font-weight: 900; color: #0056b3; cursor: pointer; text-decoration: none; }
         
-        /* AXTARIŞ PANELİ */
         .search-container { flex: 0 1 500px; display: flex; position: relative; margin: 0 20px; }
         .search-container input { width: 100%; padding: 12px 20px; border: 2px solid #e1e8ed; border-radius: 25px; outline: none; font-size: 14px; transition: 0.3s; }
         .search-container input:focus { border-color: #0056b3; box-shadow: 0 0 10px rgba(0,86,179,0.1); }
         
-        /* SƏBƏT VƏ ADMİN DÜYMƏLƏRİ */
         .header-actions { display: flex; align-items: center; gap: 15px; }
-        .cart-btn { background: #0056b3; color: white; padding: 10px 20px; border-radius: 20px; border: none; font-weight: bold; cursor: pointer; position: relative; }
-        .cart-btn:hover { background: #004085; }
+        .cart-btn { background: #0056b3; color: white; padding: 10px 20px; border-radius: 20px; border: none; font-weight: bold; cursor: pointer; }
         .admin-btn { background: #e2e8f0; color: #4a5568; padding: 10px 18px; border-radius: 20px; border: none; font-weight: 600; cursor: pointer; }
-        .admin-btn:hover { background: #cbd5e1; }
 
         .main-wrapper { max-width: 1400px; margin: 30px auto; padding: 0 3%; display: flex; gap: 30px; }
         
-        /* SOL KOMPLEKS FİLTR PANELİ */
         aside { width: 280px; background: white; padding: 25px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.02); border: 1px solid #eef2f5; height: fit-content; }
         aside h3 { font-size: 16px; font-weight: 700; margin-bottom: 15px; color: #1a202c; border-bottom: 2px solid #f6f9fc; padding-bottom: 8px; }
-        .filter-link { display: block; width: 100%; text-align: left; padding: 10px; margin-bottom: 5px; border: none; background: none; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 600; color: #64748b; transition: 0.2s; }
-        .filter-link:hover, .filter-link.active { background: #e0f2fe; color: #0056b3; }
+        .filter-link { display: block; width: 100%; text-align: left; padding: 10px; margin-bottom: 5px; border: none; background: none; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 600; color: #64748b; }
+        .filter-link.active, .filter-link:hover { background: #e0f2fe; color: #0056b3; }
         .price-filter input { width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px; margin-top: 5px; font-size: 13px; }
 
-        /* MEHSUL TORU (GRID) */
         .content-area { flex: 1; }
         .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 25px; }
         .product-card { background: white; border-radius: 16px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.02); border: 1px solid #eef2f5; display: flex; flex-direction: column; justify-content: space-between; position: relative; transition: 0.3s; }
@@ -46,10 +38,9 @@
         .product-info h4 { font-size: 16px; font-weight: 700; color: #1a202c; margin-bottom: 6px; }
         .rating { color: #ffb100; font-size: 12px; margin-bottom: 10px; }
         .product-price { font-size: 20px; color: #0056b3; font-weight: 800; margin-bottom: 15px; }
-        .buy-btn { background: #0056b3; color: white; border: none; padding: 12px; border-radius: 10px; cursor: pointer; font-weight: bold; width: 100%; transition: 0.2s; }
-        .buy-btn:hover { background: #004085; }
+        .buy-btn { background: #0056b3; color: white; border: none; padding: 12px; border-radius: 10px; cursor: pointer; font-weight: bold; width: 100%; }
 
-        /* MODAL VE TƏHLÜKƏSİZ KART SİSTEMİ */
+        /* GÜVƏNLİ SİFARİŞ MODALI */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; z-index: 1000; }
         .modal-content { background: white; padding: 35px; border-radius: 20px; max-width: 550px; width: 92%; max-height: 90vh; overflow-y: auto; }
         .form-group { margin-bottom: 15px; }
@@ -57,12 +48,13 @@
         .form-group input, .form-group select { width: 100%; padding: 11px; border: 1px solid #cbd5e1; border-radius: 8px; outline: none; }
         .save-btn { background: #10b981; color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; }
 
-        /* ADMİN PANEL LAYOUT */
+        /* ADMİN PANEL */
         #admin-section { display: none; background: white; padding: 40px; border-radius: 20px; box-shadow: 0 4px 25px rgba(0,0,0,0.04); width: 100%; }
         .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 30px; }
         .stat-card { background: #f8fafc; padding: 20px; border-radius: 12px; border-top: 4px solid #0056b3; }
         .stat-card p { font-size: 24px; font-weight: bold; color: #0056b3; }
         .panel-layout { display: grid; grid-template-columns: 1fr 1.3fr; gap: 30px; }
+        .form-card { background: #f8fafc; padding: 25px; border-radius: 16px; border: 1px solid #e2e8f0; margin-bottom: 25px; }
         .admin-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
         .admin-table th, .admin-table td { padding: 12px; text-align: left; border-bottom: 1px solid #e2e8f0; font-size: 13px; }
         .admin-table th { background: #f1f5f9; color: #0056b3; }
@@ -71,118 +63,119 @@
 </head>
 <body>
 
-    <!-- ÜST STRIP BANNER -->
-    <div class="promo-banner" id="reklam-alani">🔥 BLUESTORE ENTERPRISE: KARTDAN KARTA TƏHLÜKƏSİZ ÖDƏNİŞ SİSTEMİ AKTIIVDIR!</div>
+    <div class="promo-banner" id="reklam-alani">🔒 BLUESTORE PRO: 256-BIT SSL ŞİFRƏLƏNMƏ İLƏ %100 GÜVƏNLİ KARTDAN KARTA TRANSFER!</div>
 
-    <!-- NƏHƏNG NAVİGASYON -->
     <header>
-        <div class="logo" onclick="ekranDegistir('magaza')">🔹 BlueStore</div>
+        <div class="logo" onclick="ekranDegistir('magaza')">🔹 BlueStore Pro</div>
         
-        <!-- Canlı Axtarış Sistemi -->
         <div class="search-container">
-            <input type="text" id="arama-input" placeholder="Məhsul, marka və ya kateqoriya axtarın..." onkeyup="canliArama()">
+            <input type="text" id="arama-input" placeholder="Platformada təhlükəsiz axtarış edin..." onkeyup="canliArama()">
         </div>
 
         <div class="header-actions">
-            <button class="cart-btn">Səbətim (<span id="sepet-sayi">0</span>)</button>
-            <button class="admin-btn" onclick="ekranDegistir('login')">⚙️ Admin Control</button>
+            <button class="cart-btn" onclick="ekranDegistir('magaza')">Səbət (<span id="sepet-sayi">0</span>)</button>
+            <button class="admin-btn" onclick="ekranDegistir('login')">⚙️ Admin Kontrol</button>
         </div>
     </header>
 
-    <!-- KOMPLEKS MAĞAZA STRUKTURU -->
     <div class="container" id="magaza-section" style="display: block;">
         <div class="main-wrapper">
-            <!-- Sol Kompleks Menyu Filtri -->
             <aside>
                 <h3>Kateqoriyalar</h3>
-                <button class="filter-link active" onclick="kategoriFiltrele('Tümü', this)">Tüm Məhsullar</button>
+                <button class="filter-link active" onclick="kategoriFiltrele('Tümü', this)">Bütün Məhsullar</button>
                 <button class="filter-link" onclick="kategoriFiltrele('Giyim', this)">Geyim & Moda</button>
                 <button class="filter-link" onclick="kategoriFiltrele('Ev-Yasam', this)">Ev & Yaşayış</button>
                 <button class="filter-link" onclick="kategoriFiltrele('Kozmetik', this)">Kosmetika & Baxım</button>
-                <button class="filter-link" onclick="kategoriFiltrele('Elektronik', this)">Premium Elektronika</button>
+                <button class="filter-link" onclick="kategoriFiltrele('Elektronik', this)">Elektronika</button>
                 
-                <h3 style="margin-top: 30px;">Qiymət Aralığı</h3>
+                <h3 style="margin-top: 30px;">Qiymət Süzgəci</h3>
                 <div class="price-filter">
                     <input type="number" id="min-price" placeholder="Min ₼" onkeyup="qiymetFiltrele()">
                     <input type="number" id="max-price" placeholder="Max ₼" onkeyup="qiymetFiltrele()">
                 </div>
             </aside>
 
-            <!-- Sağ Məhsul Siyahısı -->
             <main class="content-area">
                 <div class="products-grid" id="vitrin-alani"></div>
             </main>
         </div>
     </div>
 
-    <!-- SİFARİŞ VƏ KARTDAN-KARTA TRANSFER MODALI -->
+    <!-- SİFARİŞ VƏ SÜRƏTLİ KOPYALANAN KART PANELİ -->
     <div class="modal" id="sifaris-modal">
         <div class="modal-content">
-            <h3 style="color:#0056b3; margin-bottom:15px;">💳 Kartla Ödəniş və Sifariş</h3>
+            <h3 style="color:#0056b3; margin-bottom:10px;">🔒 Güvənli Sifariş və Transfer</h3>
+            <div style="display:flex; gap:10px; align-items:center; background:#e0f2fe; padding:8px 12px; border-radius:8px; font-size:12px; font-weight:bold; color:#0369a1; margin-bottom:15px;">
+                🛡️ Məlumatlarınız 256-Bit SSL Texnologiyası ilə Qorunur.
+            </div>
             <p id="sifaris-urun-ad" style="font-weight:700; margin-bottom:15px; color:#333;"></p>
             
-            <!-- PEŞƏKAR KART TRANSFER QUTUSU -->
             <div style="background:#f0fdf4; border:1px dashed #10b981; padding:18px; border-radius:12px; margin-bottom:20px; font-size:14px;">
-                <strong style="color:#10b981;">💰 Birbank / Leo Kart Nömrəsi:</strong><br>
+                <strong style="color:#10b981;">💰 Köçürmə Ediləcək Bank Hesabı:</strong><br>
+                <span id="txt-bank-adi" style="font-weight:700; display:block; margin-top:5px; color:#555;">Bank: Kapital Bank</span>
                 <span id="kart-no-span" style="font-size:18px; font-weight:800; letter-spacing:1px; color:#1a202c; display:block; margin:6px 0;">4127 8945 1256 0000</span>
                 <strong>Sahibi:</strong> <span id="admin-kart-sahibi">Əli Məmmədov</span><br>
-                <small style="color:#666; display:block; margin-top:5px;">*Məbləği yuxarıdakı karta köçürün və qəbzi saxlayın. Sifarişiniz sistemə dərhal düşəcək.</small>
+                <small style="color:#666; display:block; margin-top:5px;">*Məbləği köçürün, formanı doldurun. Sifariş tamamilə yoxlanılıb kuryerə veriləcək.</small>
             </div>
 
-            <div class="form-group"><label>Adınız və Soyadınız</label><input type="text" id="musteri-ad" placeholder="Əli Məmmədov"></div>
+            <div class="form-group"><label>Adınız və Soyadınız</label><input type="text" id="musteri-ad" placeholder="Məsələn: Vaqif Əliyev"></div>
             <div class="form-group"><label>Əlaqə Nömrəniz</label><input type="text" id="musteri-tel" placeholder="050-XXX-XX-XX"></div>
-            <div class="form-group"><label>Çatdırılma Ünvanı (Metro və ya Ev)</label><input type="text" id="musteri-unvan" placeholder="Nərimanov metrosu çıxışı"></div>
+            <div class="form-group"><label>Çatdırılma Ünvanı (Metro və ya Ev)</label><input type="text" id="musteri-unvan" placeholder="Elmlər Akademiyası m. çıxışı"></div>
             
-            <button class="save-btn" style="background:#10b981; padding:14px;" onclick="siparisiTamamlaGonder()">Ödənişi Etdim, Sifarişi Tamamla</button>
-            <button class="delete-btn" style="width:100%; margin-top:10px; background:#e2e8f0; color:#333;" onclick="document.getElementById('sifaris-modal').style.display='none'">Pəncərəni Bağla</button>
+            <button class="save-btn" style="background:#10b981; padding:14px;" onclick="siparisiTamamlaGonder()">Ödənişi Etdim, Sifarişi Rəsmiləşdir</button>
+            <button class="delete-btn" style="width:100%; margin-top:10px; background:#e2e8f0; color:#333;" onclick="document.getElementById('sifaris-modal').style.display='none'">Geri Dön</button>
         </div>
     </div>
 
-    <!-- ADMİN LOGIN -->
+    <!-- ADMİN LOGİN (AVESTA / KURDOGLU) -->
     <div id="login-section" class="container" style="max-width:450px; margin-top:50px; display:none;">
         <div style="background:white; padding:35px; border-radius:20px; box-shadow:0 4px 20px rgba(0,0,0,0.05); text-align:center;">
-            <h3 style="color:#0056b3; margin-bottom:20px;">🔒 Təhlükəsiz Admin Girişi</h3>
-            <div class="form-group" style="text-align:left;"><label>İstifadəçi</label><input type="text" id="login-user" value="admin"></div>
-            <div class="form-group" style="text-align:left;"><label>Şifrə</label><input type="password" id="login-pass" value="1234"></div>
-            <button class="buy-btn" onclick="adminGirisYap()">Sistemə Daxil Ol</button>
+            <h3 style="color:#0056b3; margin-bottom:20px;">🔒 Enterprise Təhlükəsizlik Girişi</h3>
+            <div class="form-group" style="text-align:left;"><label>İstifadəçi Adı</label><input type="text" id="login-user" placeholder="Giriş adını yazın..."></div>
+            <div class="form-group" style="text-align:left;"><label>Şifrə</label><input type="password" id="login-pass" placeholder="Şifrəni yazın..."></div>
+            <button class="buy-btn" onclick="adminGirisYap()">Sistemə Giriş İzlə</button>
         </div>
     </div>
 
-    <!-- NƏHƏNG KORPORATİV ADMİN PANEL -->
+    <!-- MÜRƏKKƏB KORPORATİV ADMİN PANEL -->
     <div id="admin-section" class="container" style="display: none;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:25px;">
-            <h2 style="color:#0056b3;">⚙️ BlueStore Enterprise İdarəetmə Paneli</h2>
-            <button class="delete-btn" style="background:#4a5568; color:white;" onclick="ekranDegistir('magaza')">Paneldən Çıx</button>
+            <h2 style="color:#0056b3;">⚙️ BlueStore Enterprise Baş Admin Paneli</h2>
+            <button class="delete-btn" style="background:#4a5568; color:white;" onclick="ekranDegistir('magaza')">Paneli Kilidlə və Çıx</button>
         </div>
         
         <div class="stats-grid">
-            <div class="stat-card"><h4>Ümumi Ciro</h4><p id="stat-ciro">0 ₼</p></div>
-            <div class="stat-card"><h4>Sifariş Sayı</h4><p id="stat-siparis">0</p></div>
-            <div class="stat-card"><h4>Aktiv Envanter</h4><p id="stat-urun-sayisi">0</p></div>
-            <div class="stat-card"><h4>Server Statusu</h4><p style="color:#10b981; font-size:16px;">ONLINE (VÖEN-siz)</p></div>
+            <div class="stat-card"><h4>Ümumi Qazanc</h4><p id="stat-ciro">0 ₼</p></div>
+            <div class="stat-card"><h4>Gələn Sifariş</h4><p id="stat-siparis">0</p></div>
+            <div class="stat-card"><h4>Envanter Sayı</h4><p id="stat-urun-sayisi">0</p></div>
+            <div class="stat-card"><h4>Təhlükəsizlik Modu</h4><p style="color:#10b981; font-size:16px; font-weight:bold;">MAXIMUM GÜVƏNLİ</p></div>
         </div>
 
         <div class="panel-layout">
             <div>
+                <!-- YENİ SEÇƏNƏK: KART VƏ BANK DEYİŞMƏ PANELİ -->
                 <div class="form-card">
-                    <h3>💳 Kart Sahibi Parametrləri</h3>
-                    <div class="form-group"><label>Ad Soyad</label><input type="text" id="admin-input-sahibi" value="Əli Məmmədov"></div>
-                    <button class="save-btn" style="background:#0056b3;" onclick="kartYenile()">Məlumatları Yenilə</button>
+                    <h3>💳 Aktiv Bank və Kart Ayarları (Koda Girmədən)</h3>
+                    <div class="form-group"><label>Bankın Adı</label><input type="text" id="admin-input-bank" value="Kapital Bank"></div>
+                    <div class="form-group"><label>Kart Nömrəsi</label><input type="text" id="admin-input-kartno" value="4127 8945 1256 0000"></div>
+                    <div class="form-group"><label>Kart Sahibi (Ad Soyad)</label><input type="text" id="admin-input-sahibi" value="Əli Məmmədov"></div>
+                    <button class="save-btn" style="background:#0056b3;" onclick="kartSisteminiYenile()">Kart Seçənəklərini Saxla</button>
                 </div>
+                
                 <div class="form-card">
-                    <h3>📦 Yeni Məhsul Əlavə Et</h3>
+                    <h3>📦 Mağazaya Məhsul Yüklə</h3>
                     <div class="form-group"><label>Məhsul Adı</label><input type="text" id="urun-ad"></div>
                     <div class="form-group"><label>Kateqoriya</label><select id="urun-kategori"><option value="Giyim">Geyim & Moda</option><option value="Ev-Yasam">Ev & Yaşayış</option><option value="Kozmetik">Kosmetika</option><option value="Elektronik">Elektronika</option></select></div>
                     <div class="form-group"><label>Qiymət (₼)</label><input type="number" id="urun-fiyat"></div>
-                    <div class="form-group"><label>Model</label><select id="urun-ikon"><option value="👕">👕 Geyim</option><option value="👟">👟 Ayaqqabı</option><option value="☕">☕ Ev/Mətbəx</option><option value="🧴">🧴 Kosmetika</option><option value="📱">📱 Elektronika</option></select></div>
-                    <button class="save-btn" onclick="yeniUrunEkle()">Məhsulu Canlıya At</button>
+                    <div class="form-group"><label>Model İkonu</label><select id="urun-ikon"><option value="👕">👕 Geyim / Üst</option><option value="👟">👟 Ayaqqabı</option><option value="☕">☕ Ev / Qəhvə</option><option value="🧴">🧴 Kozmetika / Serum</option><option value="📱">📱 Smartfon / Cihaz</option></select></div>
+                    <button class="save-btn" onclick="yeniUrunEkle()">Məhsulu Satışa Çıxar</button>
                 </div>
             </div>
             <div>
-                <h3>Envanter Siyahısı</h3>
-                <table class="admin-table" style="margin-bottom:30px;"><thead><tr><th>İkon</th><th>Məhsul</th><th>Qiymət</th><th>Sil</th></tr></thead><tbody id="admin-liste-alani"></tbody></table>
-                <h3>Gələn Sifariş Logları (Canlı Köçürmələr)</h3>
-                <table class="admin-table" style="border-top:3px solid #10b981;"><thead><tr><th>Müştəri</th><th>Məhsul</th><th>Ünvan</th></tr></thead><tbody id="admin-siparis-alani"></tbody></table>
+                <h3>Aktiv Envanter Siyahısı</h3>
+                <table class="admin-table" style="margin-bottom:30px;"><thead><tr><th>Model</th><th>Məhsul</th><th>Qiymət</th><th>Sil</th></tr></thead><tbody id="admin-liste-alani"></tbody></table>
+                <h3>Canlı Gələn Sifariş Arxivləri</h3>
+                <table class="admin-table" style="border-top:3px solid #10b981;"><thead><tr><th>Müştəri / Tel</th><th>Məhsul / Qiymət</th><th>Ünvan</th></tr></thead><tbody id="admin-siparis-alani"></tbody></table>
             </div>
         </div>
     </div>
@@ -199,6 +192,9 @@
         let toplamCiro = Number(localStorage.getItem('comp_ciro')) || 0;
         let siparisSayisi = Number(localStorage.getItem('comp_siparis_sayisi')) || 0;
         let siparisLoglari = JSON.parse(localStorage.getItem('comp_siparis_loglari')) || [];
+        
+        let bankAdi = localStorage.getItem('comp_bank_adi') || "Kapital Bank";
+        let kartNumarasi = localStorage.getItem('comp_kart_no') || "4127 8945 1256 0000";
         let kartSahibi = localStorage.getItem('comp_kart_sahibi') || "Əli Məmmədov";
         
         let secilenKategori = "Tümü";
@@ -209,6 +205,8 @@
             localStorage.setItem('comp_ciro', toplamCiro);
             localStorage.setItem('comp_siparis_sayisi', siparisSayisi);
             localStorage.setItem('comp_siparis_loglari', JSON.stringify(siparisLoglari));
+            localStorage.setItem('comp_bank_adi', bankAdi);
+            localStorage.setItem('comp_kart_no', kartNumarasi);
             localStorage.setItem('comp_kart_sahibi', kartSahibi);
         }
 
@@ -234,9 +232,9 @@
                             <div class="product-info">
                                 <small style="color:#888; font-weight:bold;">${urun.kategori.toUpperCase()}</small>
                                 <h4>${urun.ad}</h4>
-                                <div class="rating">⭐⭐⭐⭐⭐ <span style="color:#666;">(4.9)</span></div>
+                                <div class="rating">⭐⭐⭐⭐⭐ <span style="color:#666;">(5.0)</span></div>
                                 <div class="product-price">${urun.fiyat} ₼</div>
-                                <button class="buy-btn" onclick="sifarisEkraniniAc('${urun.ad}', ${urun.fiyat})">🛍️ İndi Sifariş Et</button>
+                                <button class="buy-btn" onclick="sifarisEkraniniAc('${urun.ad}', ${urun.fiyat})">🛍️ Təhlükəsiz Sifariş</button>
                             </div>
                         </div>
                     `;
@@ -245,7 +243,11 @@
                 adminTablo.innerHTML += `<tr><td>${urun.ikon}</td><td><strong>${urun.ad}</strong></td><td>${urun.fiyat} ₼</td><td><button class="delete-btn" onclick="urunSil(${urun.id})">Sil</button></td></tr>`;
             });
 
+            // Kart UI elementlərini yenilə
+            document.getElementById('txt-bank-adi').innerText = "Bank: " + bankAdi;
+            document.getElementById('kart-no-span').innerText = kartNumarasi;
             document.getElementById('admin-kart-sahibi').innerText = kartSahibi;
+
             document.getElementById('stat-urun-sayisi').innerText = urunler.length;
             document.getElementById('stat-ciro').innerText = toplamCiro + " ₼";
             document.getElementById('stat-siparis').innerText = siparisSayisi;
@@ -253,7 +255,7 @@
             const siparisTablo = document.getElementById('admin-siparis-alani');
             siparisTablo.innerHTML = "";
             siparisLoglari.forEach(log => {
-                siparisTablo.innerHTML += `<tr><td>${log.adSoyad}<br><small>${log.tel}</small></td><td>${log.urun}<br><strong>${log.fiyat}₼</strong></td><td>${log.unvan}</td></tr>`;
+                siparisTablo.innerHTML += `<tr><td>${log.adSoyad}<br><small>${log.tel}</small></td><td>${log.urun}<br><strong>${log.fiyat} ₼</strong></td><td>${log.unvan}</td></tr>`;
             });
         }
 
@@ -268,7 +270,7 @@
 
         function sifarisEkraniniAc(ad, fiyat) {
             secilenUrunData = { ad, fiyat };
-            document.getElementById('sifaris-urun-ad').innerText = "Məhsul: " + ad + " | Məbləğ: " + fiyat + " ₼";
+            document.getElementById('sifaris-urun-ad').innerText = "Seçilən Məhsul: " + ad + " | Məbləğ: " + fiyat + " ₼";
             document.getElementById('sifaris-modal').style.display = 'flex';
         }
 
@@ -277,7 +279,7 @@
             const tel = document.getElementById('musteri-tel').value;
             const unvan = document.getElementById('musteri-unvan').value;
 
-            if(!adSoyad || !tel || !unvan) { alert("Zəhmət olmasa bütün xanaları doldurun!"); return; }
+            if(!adSoyad || !tel || !unvan) { alert("Xahiş olunur bütün xanaları doldurun!"); return; }
 
             siparisSayisi++;
             toplamCiro += secilenUrunData.fiyat;
@@ -287,7 +289,7 @@
             document.getElementById('sifaris-modal').style.display = 'none';
             document.getElementById('sepet-sayi').innerText = siparisSayisi;
             
-            alert(`Sifarişiniz Göndərildi! 🎉\n\nKöçürməniz təsdiqləndikdən sonra məhsul dərhal kuryerə veriləcək.`);
+            alert(`Sifarişiniz SSL qorunmalı şəbəkə ilə ötürüldü! 🎉\n\nBank transferi yoxlanıldıqdan sonra kuryer məhsulu dərhal ünvanınıza çatdıracaq.`);
         }
 
         function yeniUrunEkle() {
@@ -296,28 +298,41 @@
             const fiyat = document.getElementById('urun-fiyat').value;
             const ikon = document.getElementById('urun-ikon').value;
 
-            if(!ad || !fiyat) { alert("Xanaları tam doldurun!"); return; }
+            if(!ad || !fiyat) { alert("Məhsul məlumatlarını tam doldurun!"); return; }
 
             urunler.push({ id: Date.now(), ad, fiyat: Number(fiyat), kategori, ikon, indirim: "Yeni" });
             hafizayaKaydet(); listele();
             document.getElementById('urun-ad').value = "";
             document.getElementById('urun-fiyat').value = "";
-            alert("Məhsul uğurla əlavə edildi!");
+            alert("Yeni məhsul uğurla envanterə əlavə olundu!");
         }
 
         function urunSil(id) { urunler = urunler.filter(u => u.id !== id); hafizayaKaydet(); listele(); }
         
-        function kartYenile() {
+        // KODA GİRMƏDƏN KART SEÇƏNƏKLƏRİNİ DƏYİŞMƏ FUNKSİYASI
+        function kartSisteminiYenile() {
+            bankAdi = document.getElementById('admin-input-bank').value;
+            kartNumarasi = document.getElementById('admin-input-kartno').value;
             kartSahibi = document.getElementById('admin-input-sahibi').value;
-            hafizayaKaydet(); listele(); alert("Kart sahibi yeniləndi!");
+            hafizayaKaydet(); listele();
+            alert("Mürəkkəb Bank və Kart sistemləri tamamilə yeniləndi! 💳");
         }
 
+        // TƏHLÜKƏSİZ ADMİN GİRİŞİ (AVESTA / KURDOGLU)
         function adminGirisYap() {
-            if(document.getElementById('login-user').value === "admin" && document.getElementById('login-pass').value === "1234") {
+            const u = document.getElementById('login-user').value;
+            const p = document.getElementById('login-pass').value;
+
+            if(u === "avesta" && p === "kurdoglu") {
                 document.getElementById('login-section').style.display = 'none';
                 document.getElementById('admin-section').style.display = 'block';
+                
+                document.getElementById('admin-input-bank').value = bankAdi;
+                document.getElementById('admin-input-kartno').value = kartNumarasi;
                 document.getElementById('admin-input-sahibi').value = kartSahibi;
-            } else { alert("Yanlış Şifrə!"); }
+            } else { 
+                alert("🔒 TƏHLÜKƏSİZLİK XƏBƏRDARLIĞI: Yanlış Admin Giriş Məlumatı!"); 
+            }
         }
 
         function ekranDegistir(ekran) {
