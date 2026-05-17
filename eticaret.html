@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlueStore - Çok Amaçlı Alışveriş Platformu</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: #f4f8fa; color: #2d3748; min-height: 100vh; }
+        
+        /* REKLAM BANNER */
+        .promo-banner { background: linear-gradient(90deg, #0077b6, #00b4d8); color: white; text-align: center; padding: 12px; font-weight: bold; font-size: 14px; }
+        
+        /* MENÜ BARLARI */
+        header { background-color: #ffffff; padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .logo { font-size: 26px; font-weight: 800; color: #0077b6; cursor: pointer; }
+        .nav-links { display: flex; gap: 25px; list-style: none; }
+        .nav-links a { text-decoration: none; color: #4a5568; font-weight: 600; font-size: 15px; cursor: pointer; }
+        .nav-links a:hover, .nav-links a.active { color: #0077b6; border-bottom: 2px solid #0077b6; padding-bottom: 5px; }
+        .admin-btn { background: #e0f2fe; color: #0369a1; padding: 10px 20px; border-radius: 10px; font-weight: bold; cursor: pointer; border: none; }
+        .admin-btn:hover { background: #0369a1; color: white; }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+
+        /* GİRİŞ SAYFASI */
+        #giris-section { background: linear-gradient(135deg, #e0f2fe 0%, #ffffff 100%); padding: 80px 40px; text-align: center; border-radius: 24px; margin-top: 20px; box-shadow: 0 10px 30px rgba(0,119,182,0.05); }
+        #giris-section h1 { font-size: 42px; color: #0369a1; margin-bottom: 20px; font-weight: 800; }
+        .explore-btn { background: #0077b6; color: white; border: none; padding: 15px 35px; font-size: 16px; font-weight: bold; border-radius: 12px; cursor: pointer; box-shadow: 0 4px 15px rgba(0,119,182,0.3); }
+
+        /* MAĞAZA VE KATEGORİ FİLTRESİ */
+        #magaza-section { display: none; }
+        .category-filter-bar { display: flex; gap: 15px; justify-content: center; margin-bottom: 30px; flex-wrap: wrap; }
+        .filter-btn { padding: 8px 18px; border-radius: 20px; border: 1px solid #0077b6; background: white; color: #0077b6; cursor: pointer; font-weight: 600; }
+        .filter-btn.active, .filter-btn:hover { background: #0077b6; color: white; }
+        
+        /* MAĞAZA VİTRİNİ */
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; }
+        .product-card { background: white; border-radius: 20px; padding: 25px; box-shadow: 0 4px 20px rgba(0,0,0,0.02); text-align: center; display: flex; flex-direction: column; justify-content: space-between; border: 1px solid #e2e8f0; }
+        .product-card:hover { transform: translateY(-5px); border-color: #bee3f8; }
+        .product-img { background: #f8fafc; font-size: 55px; padding: 35px 0; border-radius: 16px; margin-bottom: 20px; }
+        .product-badge { background: #e0f2fe; color: #0369a1; font-size: 12px; font-weight: bold; padding: 4px 10px; border-radius: 10px; display: inline-block; margin-bottom: 10px; }
+        .product-price { font-size: 22px; color: #0077b6; font-weight: 800; margin: 15px 0; }
+        .buy-btn { background: #0077b6; color: white; border: none; padding: 12px; border-radius: 10px; cursor: pointer; font-weight: bold; width: 100%; }
+
+        /* GELİŞMİŞ ÇOĞALTILMIŞ ADMİN PANELİ */
+        #admin-section { display: none; background: white; padding: 40px; border-radius: 24px; box-shadow: 0 4px 25px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; }
+        
+        /* İstatistik Kartları */
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 35px; }
+        .stat-card { background: #f8fafc; padding: 20px; border-radius: 14px; border-top: 4px solid #0077b6; }
+        .stat-card p { font-size: 22px; font-weight: bold; color: #0369a1; }
+
+        /* Admin Düzeni */
+        .panel-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        .form-card { background: #f8fafc; padding: 25px; border-radius: 16px; border: 1px solid #e2e8f0; margin-bottom: 25px; }
+        .form-card h3 { margin-bottom: 15px; font-size: 17px; color: #0369a1; padding-bottom: 8px; border-bottom: 1px solid #e2e8f0; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 13px; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; outline: none; background: white; }
+        .save-btn { background: #0077b6; color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; }
+        
+        .admin-table { width: 100%; border-collapse: collapse; }
+        .admin-table th, .admin-table td { padding: 12px; text-align: left; border-bottom: 1px solid #e2e8f0; font-size: 14px; }
+        .admin-table th { background: #f1f5f9; color: #0077b6; }
+        .delete-btn { background: #fee2e2; color: #ef4444; border: none; padding: 5px 10px; border-radius: 6px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <div class="promo-banner" id="reklam-alani">💎 BLUESTORE: HER KATEGORİDE YENİ YIL SEZONU AÇILDI! KUPON: MERHABA10</div>
+
+    <header>
+        <div class="logo" onclick="ekranDegistir('giris')">🔹 BlueStore</div>
+        <ul class="nav-links">
+            <li><a id="menu-giris" class="active" onclick="ekranDegistir('giris')">Ana Sayfa</a></li>
+            <li><a id="menu-magaza" onclick="ekranDegistir('magaza')">Mağaza / Ürünler</a></li>
+        </ul>
+        <button class="admin-btn" onclick="ekranDegistir('admin')">⚙️ Gelişmiş Admin Yönetimi</button>
+    </header>
+
+    <div class="container">
+        
+        <!-- GİRİŞ EKRANI -->
+        <div id="giris-section">
+            <h1>Aradığınız Her Şey Tek Bir Yerde</h1>
+            <p>BlueStore artık sadece teknoloji değil; giyim, ev yaşam, kozmetik ve çok daha fazlasını tek çatı altında sunan dev bir pazar yeri.</p>
+            <button class="explore-btn" onclick="ekranDegistir('magaza')">Alışverişe Başla 🚀</button>
+        </div>
+
+        <!-- MAĞAZA EKRANI (KATEGORİ DETAYLI) -->
+        <div id="magaza-section">
+            <!-- Kategori Butonları -->
+            <div class="category-filter-bar">
+                <button class="filter-btn active" onclick="kategoriFiltrele('Tümü', this)">Tümü</button>
+                <button class="filter-btn" onclick="kategoriFiltrele('Giyim', this)">Giyim / Moda</button>
+                <button class="filter-btn" onclick="kategoriFiltrele('Ev-Yasam', this)">Ev & Yaşam</button>
+                <button class="filter-btn" onclick="kategoriFiltrele('Kozmetik', this)">Kozmetik</button>
+                <button class="filter-btn" onclick="kategoriFiltrele('Elektronik', this)">Elektronik</button>
+            </div>
+            <div class="products-grid" id="vitrin-alani"></div>
+        </div>
+
+        <!-- ⚙️ ÇOĞALTILMIŞ SEÇENEKLİ ADMİN PANELİ -->
+        <div id="admin-section">
+            <h2 style="color: #0077b6; margin-bottom: 5px;">⚙️ BlueStore Genel Kontrol Merkezi</h2>
+            <p style="color:#64748b; margin-bottom:25px;">Mağazanızın tüm kategorilerini, finansını ve operasyonunu buradan yönetin.</p>
+            
+            <!-- SEÇENEK 1: ANA İSTATİSTİK ÖZETLERİ -->
+            <div class="stats-grid">
+                <div class="stat-card"><h4>Toplam Ciro</h4><p id="stat-ciro">0 TL</p></div>
+                <div class="stat-card"><h4>Sipariş Sayısı</h4><p id="stat-siparis">0</p></div>
+                <div class="stat-card"><h4>Envanter Ürün</h4><p id="stat-urun-sayisi">4</p></div>
+                <div class="stat-card"><h4>Site Durumu</h4><p id="stat-durum" style="color:#10b981;">YAYINDA</p></div>
+            </div>
+            
+            <div class="panel-layout">
+                <!-- SOL KOLON: YÖNETİM SEÇENEKLERİ (YENİ FORMLAR) -->
+                <div>
+                    <!-- SEÇENEK 2: HER KATEGORİYE UYGUN ÜRÜN EKLEME FORMU -->
+                    <div class="form-card">
+                        <h3>📦 Genişletilmiş Ürün Girişi</h3>
+                        <div class="form-group">
+                            <label>Ürün Adı</label>
+                            <input type="text" id="urun-ad" placeholder="Örn: Pamuklu Sweatshirt veya Kahve Makinesi">
+                        </div>
+                        <div class="form-group">
+                            <label>Kategori Seçimi</label>
+                            <select id="urun-kategori">
+                                <option value="Giyim">Giyim / Moda</option>
+                                <option value="Ev-Yasam">Ev & Yaşam</option>
+                                <option value="Kozmetik">Kozmetik & Bakım</option>
+                                <option value="Elektronik">Elektronik</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Fiyat (TL)</label>
+                            <input type="number" id="urun-fiyat" placeholder="Örn: 450">
+                        </div>
+                        <div class="form-group">
+                            <label>Ürün Görsel Modeli (Emoji)</label>
+                            <select id="urun-ikon">
+                                <option value="👕">👕 Tişört / Kıyafet</option>
+                                <option value="👟">👟 Ayakkabı</option>
+                                <option value="☕">☕ Ev / Mutfak / Kahve</option>
+                                <option value="🛋️">🛋️ Ev Eşyası / Mobilya</option>
+                                <option value="🧴">🧴 Parfüm / Kozmetik</option>
+                                <option value="📱">📱 Elektronik Cihaz</option>
+                            </select>
+                        </div>
+                        <button class="save-btn" onclick="yeniUrunEkle()">Ürünü Canlı Satışa Çıkar</button>
+                    </div>
+
+                    <!-- SEÇENEK 3: MAĞAZA KAPATMA / BAKIMA ALMA SEÇENEĞİ -->
+                    <div class="form-card">
+                        <h3>🔒 Mağaza Durum Ayarı</h3>
+                        <div class="form-group">
+                            <label>Mağaza Modu</label>
+                            <select id="magaza-modu-ayar" onchange="magazaModuDegistir()">
+                                <option value="Açık">Aktif (Satışa Açık)</option>
+                                <option value="Bakım">Bakım Modu (Geçici Kapat)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- SEÇENEK 4: REKLAM & BANNER DEĞİŞTİRME SEÇENEĞİ -->
+                    <div class="form-card">
+                        <h3>📣 Üst Reklam Şeridi Yönetimi</h3>
+                        <div class="form-group">
+                            <label>Kampanya Yazısı</label>
+                            <input type="text" id="reklam-girdisi" placeholder="Reklam mesajını buraya yazın...">
+                        </div>
+                        <button class="save-btn" style="background:#0369a1;" onclick="reklamGuncelle()">Reklamı Yayınla</button>
+                    </div>
+
+                    <!-- SEÇENEK 5: KULLANICI DESTEK BİLDİRİMLERİ (Müşteri Mesaj Simülatörü) -->
+                    <div class="form-card">
+                        <h3>💬 Gelen Müşteri Mesajları</h3>
+                        <div style="background:#fff; padding:10px; border-radius:8px; border:1px solid #e2e8f0; font-size:13px;">
+                            <strong>Ahmet Y. (Müşteri):</strong> "Kargom ne zaman yola çıkar? Sipariş No: 482"
+                            <br><span style="color:#0077b6; cursor:pointer; font-weight:bold;">[Cevapla]</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SAĞ KOLON: ENVANTER VE SİPARİŞ TAKİBİ -->
+                <div>
+                    <!-- SEÇENEK 6: SENEK DETAYLI ENVANTER TABLOSU -->
+                    <h3 style="margin-bottom: 10px; color:#0077b6; font-size:16px;">Mevcut Envanter Listesi</h3>
+                    <table class="admin-table" style="margin-bottom: 30px;">
+                        <thead>
+                            <tr>
+                                <th>Model</th>
+                                <th>Ürün</th>
+                                <th>Kategori</th>
+                                <th>Fiyat</th>
+                                <th>İşlem</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-liste-alani"></tbody>
+                    </table>
+
+                    <!-- SEÇENEK 7: CANLI DÜŞEN SİPARİŞLERİN LOG TABLOSU -->
+                    <h3 style="margin-bottom: 10px; color:#10b981; font-size:16px;">Canlı Gelen Sipariş Takibi</h3>
+                    <table class="admin-table" style="border-top: 3px solid #10b981;">
+                        <thead>
+                            <tr>
+                                <th>Sipariş No</th>
+                                <th>Satılan Ürün</th>
+                                <th>Tutar</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-siparis-alani">
+                            <tr><td colspan="3" style="color:#888; text-align:center;">Henüz sipariş gelmedi.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Karışık Kategori Başlangıç Envanteri
+        let urunler = [
+            { id: 1, ad: "Oversize Tasarım Tişört", fiyat: 550, kategori: "Giyim", ikon: "👕" },
+            { id: 2, ad: "Filtre Kahve Makinesi", fiyat: 2450, kategori: "Ev-Yasam", ikon: "☕" },
+            { id: 3, ad: "Nemlendirici Bakım Kremi", fiyat: 380, kategori: "Kozmetik", ikon: "🧴" },
+            { id: 4, ad: "BluePhone Akıllı Telefon", fiyat: 45000, kategori: "Elektronik", ikon: "📱" }
+        ];
+
+        let toplamCiro = 0;
+        let siparisSayisi = 0;
+        let magazaAcikMi = true;
+
+        // Mağaza Vitrini ve Admin Envanter Güncelleme Motoru
+        function listele(filtreKategori = "Tümü") {
+            const vitrin = document.getElementById('vitrin-alani');
+            const adminTablo = document.getElementById('admin-liste-alani');
+            
+            vitrin.innerHTML = "";
+            adminTablo.innerHTML = "";
+
+            urunler.forEach(urun => {
+                // Mağaza içi kategori filtre kontrolü
+                if (filtreKategori === "Tümü" || urun.kategori === filtreKategori) {
+                    vitrin.innerHTML += `
+                        <div class="product-card">
+                            <div>
+                                <span class="product-badge">${urun.kategori}</span>
+                                <div class="product-img">${urun.ikon}</div>
+                                <h3>${urun.ad}</h3>
+                            </div>
+                            <div>
+                                <div class="product-price">${urun.fiyat.toLocaleString('tr-TR')} TL</div>
+                                <button class="buy-btn" onclick="satinal('${urun.ad}', ${urun.fiyat})">🛍️ Satın Al</button>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                // Gelişmiş Admin Tablo Verisi
+                adminTablo.innerHTML += `
+                    <tr>
+                        <td style="font-size:22px;">${urun.ikon}</td>
+                        <td><strong>${urun.ad}</strong></td>
+                        <td><span style="color:#64748b; font-size:12px;">${urun.kategori}</span></td>
+                        <td style="color:#0077b6; font-weight:bold;">${urun.fiyat} TL</td>
+                        <td><button class="delete-btn" onclick="urunSil(${urun.id})">Sil</button></td>
+                    </tr>
+                `;
+            });
+
+            document.getElementById('stat-urun-sayisi').innerText = urunler.length;
+        }
+
+        // Mağaza İçi Menü Kategori Filtreleme Tetikleyicisi
+        function kategoriFiltrele(kategori, buton) {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            buton.classList.add('active');
+            listele(kategori);
+        }
+
+        // Seçenek 2: Yeni Ürün Ekleme (Her Kategoriye Uyumlu)
+        function yeniUrunEkle() {
+            const ad = document.getElementById('urun-ad').value;
+            const kategori = document.getElementById('urun-kategori').value;
+            const fiyat = document.getElementById('urun-fiyat').value;
+            const ikon = document.getElementById('urun-ikon').value;
+
+            if(!ad || !fiyat) { alert("Lütfen tüm alanları doldurun!"); return; }
+
+            urunler.push({ id: Date.now(), ad: ad, fiyat: Number(fiyat), kategori: kategori, ikon: ikon });
+            listele();
+            
+            document.getElementById('urun-ad').value = "";
+            document.getElementById('urun-fiyat').value = "";
+            alert(`Sistem: Ürün "${kategori}" kategorisinde başarıyla yayına alındı!`);
+        }
+
+        // Ürün Silme
+        function urunSil(id) {
+            urunler = urunler.filter(u => u.id !== id);
+            listele();
+        }
+
+        // Seçenek 3: Mağaza Bakım Modu Ayarı
+        function magazaModuDegistir() {
+            const mod = document.getElementById('magaza-modu-ayar').value;
+            const durumEtiket = document.getElementById('stat-durum');
+            if(mod === "Bakım") {
+                magazaAcikMi = false;
+                durumEtiket.innerText = "BAKIMDA";
+                durumEtiket.style.color = "#ef4444";
+                alert("Mağaza müşterilere geçici olarak kapatıldı (Bakım Modu).");
+            } else {
+                magazaAcikMi = true;
+                durumEtiket.innerText = "YAYINDA";
+                durumEtiket.style.color = "#10b981";
+                alert("Mağaza yeniden yayında ve satışa açık!");
+            }
+        }
+
+        // Seçenek 4: Üst Reklam Banner Değiştirme
+        function reklamGuncelle() {
+            const yeniReklam = document.getElementById('reklam-girdisi').value;
+            if(!yeniReklam) { alert("Lütfen reklam yazısı girin!"); return; }
+            document.getElementById('reklam-alani').innerText = yeniReklam.toUpperCase();
+            alert("Duyuru panosu güncellendi!");
+            document.getElementById('reklam-girdisi').value = "";
+        }
+
+        // Seçenek 7: Müşteri Satın Alımı ve Canlı Sipariş İzleme Logu
+        function satinal(urunAd, fiyat) {
+            if(!magazaAcikMi) {
+                alert("Üzgünüz, mağazamız şu an admin tarafından bakıma alınmıştır. Daha sonra tekrar deneyiniz.");
+                return;
+            }
+            
+            alert(`🛒 Ödeme Başarılı!\n\nSatın Alınan: ${urunAd}\nTutar: ${fiyat} TL`);
+            
+            siparisSayisi++;
+            toplamCiro += fiyat;
+            
+            document.getElementById('stat-siparis').innerText = siparisSayisi;
+            document.getElementById('stat-ciro').innerText = toplamCiro.toLocaleString('tr-TR') + " TL";
+
+            // Canlı sipariş tablosuna veri düşürme
+            const siparisTablo = document.getElementById('admin-siparis-alani');
+            if(siparisSayisi === 1) siparisTablo.innerHTML = ""; // Temizle ilk boş uyarıyı
+            
+            siparisTablo.innerHTML += `
+                <tr>
+                    <td>#ORD-${Math.floor(100 + Math.random() * 900)}</td>
+                    <td><strong>${urunAd}</strong></td>
+                    <td style="color:#10b981; font-weight:bold;">+${fiyat} TL</td>
+                </tr>
+            `;
+        }
+
+        // Ekran Kontrol Sistemi
+        function ekranDegistir(ekran) {
+            document.getElementById('giris-section').style.display = 'none';
+            document.getElementById('magaza-section').style.display = 'none';
+            document.getElementById('admin-section').style.display = 'none';
+            document.getElementById('menu-giris').classList.remove('active');
+            document.getElementById('menu-magaza').classList.remove('active');
+
+            if(ekran === 'giris') {
+                document.getElementById('giris-section').style.display = 'block';
+                document.getElementById('menu-giris').classList.add('active');
+            } else if(ekran === 'magaza') {
+                document.getElementById('magaza-section').style.display = 'block';
+                document.getElementById('menu-magaza').classList.add('active');
+            } else if(ekran === 'admin') {
+                document.getElementById('admin-section').style.display = 'block';
+            }
+        }
+
+        // İlk açılış envanter yüklemesi
+        listele();
+    </script>
+</body>
+</html>
