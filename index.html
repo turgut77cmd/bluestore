@@ -27,9 +27,8 @@
         .form-group label { display: block; margin-bottom: 5px; font-weight: 600; font-size: 13px; }
         .form-group input, .form-group select { width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; outline: none; }
         .seller-card-display { background: linear-gradient(135deg, #0f172a, #1e293b); color: white; padding: 20px; border-radius: 15px; margin: 15px 0; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: left; }
-        .admin-table { width: 100%; border-collapse: collapse; margin-top: 15px; margin-bottom: 30px; background: white; border-radius: 8px; overflow: hidden; }
-        .admin-table th, .admin-table td { padding: 12px 10px; border-bottom: 1px solid #e2e8f0; text-align: left; font-size: 13px; }
-        .admin-table th { background: #f1f5f9; font-weight: 700; }
+        .admin-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        .admin-table th, .admin-table td { padding: 10px; border-bottom: 1px solid #e2e8f0; text-align: left; font-size: 13px; }
         .badge { padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: bold; }
         .bg-active { background: #f0fdf4; color: #16a34a; }
         .bg-passive { background: #fef2f2; color: #dc2626; }
@@ -70,8 +69,8 @@
     <!-- 2. GİRİŞ BÖLMƏSİ -->
     <div id="login-section" style="display: none; max-width: 400px; margin: 80px auto; background: white; padding: 35px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
         <h2 style="text-align: center; margin-bottom: 20px;">Satıcı Giriş Paneli</h2>
-        <div class="form-group"><label>İstifadəçi Adı (admin)</label><input type="text" id="admin-user" placeholder="Daxil edin..."></div>
-        <div class="form-group"><label>Giriş Kodu (1234)</label><input type="password" id="admin-pass" placeholder="Daxil edin..."></div>
+        <div class="form-group"><label>İstifadəçi Adı</label><input type="text" id="admin-user" placeholder="Daxil edin..."></div>
+        <div class="form-group"><label>Giriş Kodu</label><input type="password" id="admin-pass" placeholder="Daxil edin..."></div>
         <button class="buy-btn" onclick="adminGiris()">Sistemə Giriş Et</button>
     </div>
 
@@ -130,21 +129,7 @@
             </div>
         </div>
 
-        <h3 style="margin-top: 30px;">📥 Gələn Sifarişlər və Müştəri Nömrələri</h3>
-        <table class="admin-table">
-            <thead>
-                <tr>
-                    <th>Sifariş ID</th>
-                    <th>Müştəri Nömrəsi</th>
-                    <th>Məhsul</th>
-                    <th>Ödənilən Məbləğ</th>
-                    <th>Tarix</th>
-                </tr>
-            </thead>
-            <tbody id="admin-sifaris-tablo"></tbody>
-        </table>
-
-        <h3>📋 Mövcud Məhsulların Siyahısı</h3>
+        <h3 style="margin-top: 30px;">📋 Mövcud Məhsulların Siyahısı</h3>
         <table class="admin-table">
             <thead>
                 <tr>
@@ -174,9 +159,10 @@
                 <p id="modal-kart-sahibi" style="margin-top:5px; font-size:13px;">AD SOYAD</p>
             </div>
 
+            <!-- MÜŞTƏRİ TELEFON NÖMRƏSİ DAXİLETME -->
             <div class="form-group">
-                <label style="color:#dc2626;">Əlaqə Nömrəniz (Məcburi) *</label>
-                <input type="tel" id="modal-musteri-telefon" placeholder="Məs: +994 50 123 45 67">
+                <label>Telefon Nömrəniz (Məcburi) *</label>
+                <input type="tel" id="modal-tel-input" placeholder="Məs: +994 50 123 45 67" required>
             </div>
 
             <div class="form-group">
@@ -192,7 +178,10 @@
     </div>
 
     <script>
-        // MƏLUMAT BAZASI
+        // Gizli Giriş Məlumatları (Base64 formatında gizlədildi: avesta / kurdogu)
+        const sec_u = "YXZlc3Rh"; 
+        const sec_p = "a3VyZG9ndQ==";
+
         let mehsullar = JSON.parse(localStorage.getItem('bluestore_products')) || [
             { id: 1, ad: "iPhone 15 Pro", kat: "elektronika", qiymet: 2499, stok: 5, resim: "https://unsplash.com" },
             { id: 2, ad: "Klassik Kostyum", kat: "geyim", qiymet: 180, stok: 12, resim: "https://unsplash.com" },
@@ -200,14 +189,12 @@
         ];
 
         let promokodlar = JSON.parse(localStorage.getItem('bluestore_promos')) || { "SAVE10": 10 };
-        let sifarisler = JSON.parse(localStorage.getItem('bluestore_orders')) || [];
         let umumiQazanc = parseFloat(localStorage.getItem('bluestore_revenue')) || 0.00;
         let secilenResimBase64 = "";
         let aktivKateqoriya = "all";
         let cariSifarisMehsulId = null;
         let tetbiqEdilenEndirim = 0;
 
-        // EKRAN DƏYİŞDİRMƏ MEXANİZMİ
         function ekranDegistir(ekran) {
             document.getElementById('magaza-section').style.display = (ekran === 'magaza') ? 'block' : 'none';
             document.getElementById('login-section').style.display = (ekran === 'login') ? 'block' : 'none';
@@ -223,18 +210,20 @@
             }
         }
 
-        // SATICI GİRİŞİ
+        // TƏHLÜKƏSİZ SATICI GİRİŞİ
         function adminGiris() {
             const user = document.getElementById('admin-user').value;
             const pass = document.getElementById('admin-pass').value;
-            if(user === 'admin' && pass === '1234') {
+            
+            if(btoa(user) === sec_u && btoa(pass) === sec_p) {
                 ekranDegistir('admin');
+                document.getElementById('admin-user').value = "";
+                document.getElementById('admin-pass').value = "";
             } else {
                 alert('Xətalı istifadəçi adı və ya şifrə!');
             }
         }
 
-        // MAĞAZA KATALOQU
         function kataloqYenile() {
             const listese = document.getElementById('mehsul-listesi');
             const axtaris = document.getElementById('arama-input').value.toLowerCase();
@@ -278,20 +267,18 @@
             }
         }
 
-        // SATICI PANELİNİN YENİLƏNMƏSİ
         function panelMelenisleriYenile() {
             localStorage.setItem('bluestore_products', JSON.stringify(mehsullar));
             localStorage.setItem('bluestore_promos', JSON.stringify(promokodlar));
-            localStorage.setItem('bluestore_orders', JSON.stringify(sifarisler));
             localStorage.setItem('bluestore_revenue', umumiQazanc.toString());
 
             document.getElementById('stat-gelir').innerText = umumiQazanc.toFixed(2) + " ₼";
             document.getElementById('stat-mehsul').innerText = mehsullar.length;
             document.getElementById('stat-promo-sayi').innerText = Object.keys(promokodlar).length;
 
-            // Məhsul siyahısı cədvəli
             const tbody = document.getElementById('admin-mehsul-tablo');
             tbody.innerHTML = "";
+            
             mehsullar.forEach(p => {
                 tbody.innerHTML += `
                     <tr>
@@ -308,22 +295,6 @@
                     </tr>
                 `;
             });
-
-            // Sifarişlər siyahısı cədvəli
-            const orderTbody = document.getElementById('admin-sifaris-tablo');
-            orderTbody.innerHTML = "";
-            sifarisler.forEach(o => {
-                orderTbody.innerHTML += `
-                    <tr>
-                        <td>#${o.id}</td>
-                        <td><a href="tel:${o.tel}" style="color:#0284c7; font-weight:600; text-decoration:none;">📞 ${o.tel}</a></td>
-                        <td>${o.mehsulAd}</td>
-                        <td style="color:#16a34a; font-weight:bold;">${o.mebleg.toFixed(2)} ₼</td>
-                        <td style="color:#64748b;">${o.tarix}</td>
-                    </tr>
-                `;
-            });
-
             kartYenile();
             kataloqYenile();
         }
@@ -399,7 +370,6 @@
             }
         }
 
-        // MÜŞTƏRİ SATIN ALMA MEXANİZMİ
         function satınalmaEkranıAc(id) {
             let p = mehsullar.find(x => x.id == id);
             cariSifarisMehsulId = id;
@@ -407,7 +377,7 @@
             document.getElementById('modal-mehsul-adi').innerText = p.ad;
             document.getElementById('modal-mehsul-qiymeti').innerText = p.qiymet + " ₼";
             document.getElementById('modal-promo-input').value = "";
-            document.getElementById('modal-musteri-telefon').value = "";
+            document.getElementById('modal-tel-input').value = ""; // Nömrə hissəsini sıfırla
             
             document.getElementById('modal-kart-no').innerText = document.getElementById('c-nomre').value;
             document.getElementById('modal-kart-sahibi').innerText = document.getElementById('c-sahibi').value;
@@ -432,10 +402,12 @@
 
         function sifarişiTamamla() {
             let p = mehsullar.find(x => x.id == cariSifarisMehsulId);
-            const telInput = document.getElementById('modal-musteri-telefon').value.trim();
+            const tel = document.getElementById('modal-tel-input').value.trim();
 
-            if(!telInput) {
-                return alert("Zəhmət olmasa əlaqə nömrənizi daxil edin! Sifariş üçün bu vacibdir.");
+            // Telefon nömrəsinin yoxlanılması
+            if(!tel) {
+                alert("Zəhmət olmasa əlaqə nömrənizi daxil edin!");
+                return;
             }
 
             if(p.stok > 0) {
@@ -443,18 +415,18 @@
                 let sonQiymet = p.qiymet - (p.qiymet * tetbiqEdilenEndirim / 100);
                 umumiQazanc += sonQiymet;
                 
-                // Yeni sifarişi siyahıya əlavə et
-                let indi = new Date();
-                let tarixMetni = indi.getDate() + "." + (indi.getMonth()+1) + "." + indi.getFullYear() + " " + indi.getHours() + ":" + indi.getMinutes();
-                
-                sifarisler.unshift({
-                    id: Math.floor(1000 + Math.random() * 9000), // Random 4 rəqəmli ID
-                    tel: telInput,
-                    mehsulAd: p.ad,
-                    mebleg: sonQiymet,
-                    tarix: tarixMetni
-                });
-                
-                // Məlumatları dərhal localstorage-ə yaz
                 localStorage.setItem('bluestore_products', JSON.stringify(mehsullar));
-                localStorage.setItem('bluestore_
+                localStorage.setItem('bluestore_revenue', umumiQazanc.toString());
+                
+                alert(`Sifarişiniz qəbul edildi!\n\nMəhsul: ${p.ad}\nNömrəniz: ${tel}\nÖdənilən məbləğ: ${sonQiymet.toFixed(2)} ₼`);
+                modalBagla();
+                kataloqYenile();
+            } else {
+                alert("Təəssüf, məhsulun stoku bitdi.");
+            }
+        }
+
+        kataloqYenile();
+    </script>
+</body>
+</html>
