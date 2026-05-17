@@ -39,12 +39,36 @@
         .stat-card { background: white; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0; flex: 1; min-width: 200px; }
         .panel-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 25px; }
         .form-card { background: white; padding: 25px; border-radius: 15px; border: 1px solid #e2e8f0; }
-        footer { background: #0f172a; color: white; text-align: center; padding: 20px; position: fixed; bottom: 0; left: 0; width: 100%; font-size: 14px; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); }
-        footer a { color: #25d366; text-decoration: none; font-weight: bold; margin-left: 5px; }
-        @media (max-width: 768px) { .panel-grid { grid-template-columns: 1fr; body { padding-bottom: 80px; } } }
+        @media (max-width: 768px) { .panel-grid { grid-template-columns: 1fr; } }
+
+        /* WHATSAPP DÜYMƏSİ */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #25d366;
+            color: white;
+            border-radius: 50px;
+            text-align: center;
+            padding: 12px 20px;
+            font-weight: bold;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+        .whatsapp-float:hover { background-color: #128c7e; }
     </style>
 </head>
 <body>
+
+    <!-- WhatsApp Sabit Əlaqə Düyməsi -->
+    <a href="https://wa.me" target="_blank" class="whatsapp-float">
+        💬 Bizimlə Əlaqə (WhatsApp)
+    </a>
 
     <header>
         <div class="logo" onclick="ekranDegistir('magaza')">🔹 BlueStore</div>
@@ -71,8 +95,8 @@
     <!-- 2. GİRİŞ BÖLMƏSİ -->
     <div id="login-section" style="display: none; max-width: 400px; margin: 80px auto; background: white; padding: 35px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
         <h2 style="text-align: center; margin-bottom: 20px;">Satıcı Giriş Paneli</h2>
-        <div class="form-group"><label>İstifadəçi Adı</label><input type="text" id="admin-user" placeholder="İstifadəçi adını yazın..."></div>
-        <div class="form-group"><label>Giriş Kodu</label><input type="password" id="admin-pass" placeholder="Şifrəni yazın..."></div>
+        <div class="form-group"><label>İstifadəçi Adı</label><input type="text" id="admin-user" placeholder="Daxil edin..."></div>
+        <div class="form-group"><label>Giriş Kodu</label><input type="password" id="admin-pass" placeholder="Daxil edin..."></div>
         <button class="buy-btn" onclick="adminGiris()">Sistemə Giriş Et</button>
     </div>
 
@@ -164,13 +188,13 @@
             <!-- MÜŞTƏRİ TELEFON NÖMRƏSİ -->
             <div class="form-group">
                 <label>Telefon Nömrəniz *</label>
-                <input type="tel" id="modal-tel-input" placeholder="Məs: 050 123 45 67">
+                <input type="tel" id="modal-tel-input" placeholder="Məs: +994 50 123 45 67">
             </div>
 
-            <!-- MÜŞTƏRİ ÇATDIRILMA ÜNVANI -->
+            <!-- MÜŞTƏRİ ÜNVANI -->
             <div class="form-group">
                 <label>Çatdırılma Ünvanı *</label>
-                <input type="text" id="modal-unvan-input" placeholder="Məs: Bakı ş., Nizami küç. ev 45">
+                <input type="text" id="modal-unvan-input" placeholder="Məs: Bakı ş., Nəsimi r., ev 45">
             </div>
 
             <div class="form-group">
@@ -185,14 +209,11 @@
         </div>
     </div>
 
-    <!-- 5. SAYTIN ALT HİSSƏSİ (WHATSAPP ƏLAQƏ) -->
-    <footer>
-        Dəstək və Əlaqə üçün WhatsApp: 
-        <a href="https://wa.me" target="_blank">💬 051 367 52 79</a>
-    </footer>
-
     <script>
-        // Məlumatların itməməsi üçün LocalStorage və Standart Məhsul siyahısı
+        // Təmiz və birbaşa təyin olunmuş giriş məlumatları
+        const dogruIstifadeci = "avesta";
+        const dogruSifre = "kurdoglu";
+
         let mehsullar = JSON.parse(localStorage.getItem('bluestore_products')) || [
             { id: 1, ad: "iPhone 15 Pro", kat: "elektronika", qiymet: 2499, stok: 5, resim: "https://unsplash.com" },
             { id: 2, ad: "Klassik Kostyum", kat: "geyim", qiymet: 180, stok: 12, resim: "https://unsplash.com" },
@@ -221,13 +242,12 @@
             }
         }
 
-        // DÜZƏLDİLMİŞ SATICI GİRİŞİ
+        // TƏSDİQLƏNMİŞ SATICI GİRİŞİ
         function adminGiris() {
             const user = document.getElementById('admin-user').value.trim();
             const pass = document.getElementById('admin-pass').value.trim();
             
-            // Dəqiq və birbaşa şifrə yoxlanışı
-            if(user === "avesta" && pass === "kurdoglu") {
+            if(user === dogruIstifadeci && pass === dogruSifre) {
                 ekranDegistir('admin');
                 document.getElementById('admin-user').value = "";
                 document.getElementById('admin-pass').value = "";
@@ -416,27 +436,4 @@
         function sifarişiTamamla() {
             let p = mehsullar.find(x => x.id == cariSifarisMehsulId);
             const tel = document.getElementById('modal-tel-input').value.trim();
-            const unvan = document.getElementById('modal-unvan-input').value.trim();
-
-            if(!tel || !unvan) {
-                alert("Zəhmət olmasa Telefon nömrəsi və Çatdırılma ünvanını tam doldurun!");
-                return;
-            }
-
-            if(p.stok > 0) {
-                p.stok--;
-                let sonQiymet = p.qiymet - (p.qiymet * tetbiqEdilenEndirim / 100);
-                umumiQazanc += sonQiymet;
-                
-                localStorage.setItem('bluestore_products', JSON.stringify(mehsullar));
-                localStorage.setItem('bluestore_revenue', umumiQazanc.toString());
-                
-                alert(`Sifarişiniz Uğurla Alındı!\n\nMəhsul: ${p.ad}\nÜnvan: ${unvan}\nTelefon: ${tel}\nMəbləğ: ${sonQiymet.toFixed(2)} ₼`);
-                modalBagla();
-                kataloqYenile();
-            } else {
-                alert("Təəssüf, məhsulun stoku bitdi.");
-            }
-        }
-
-        kataloqYenile
+            const unvan = document.getElementById('modal-unvan-input').
