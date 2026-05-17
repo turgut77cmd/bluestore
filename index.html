@@ -3,109 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BlueStore Pro - Premium E-Ticarət İnfrastrukturu</title>
+    <title>BlueStore Pro - Professional E-Commerce System</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
-        body { background: #0f172a; color: #f8fafc; overflow-x: hidden; padding-bottom: 60px; }
-        
-        /* PREMİUM NAVİQASİYA */
-        header { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); padding: 20px 6%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #334155; }
-        .logo { font-size: 26px; font-weight: 900; color: #38bdf8; cursor: pointer; text-shadow: 0 0 15px rgba(56,189,248,0.3); }
-        .search-container input { width: 450px; padding: 14px 28px; background: #1e293b; border: 1px solid #475569; border-radius: 30px; color: white; outline: none; transition: 0.3s; font-size: 14px; }
-        .search-container input:focus { border-color: #38bdf8; box-shadow: 0 0 15px rgba(56,189,248,0.2); }
-        .admin-btn { background: linear-gradient(135deg, #0284c7, #0369a1); color: white; padding: 12px 24px; border-radius: 25px; border: none; font-weight: 600; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 15px rgba(2,132,199,0.3); }
-        .admin-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(2,132,199,0.5); }
-
-        /* HERO SLIDER (MÜRƏKKƏBLƏŞDİRİLMİŞ GÖRÜNÜŞ) */
-        .hero-slider { max-width: 1320px; margin: 30px auto 0 auto; height: 320px; background: linear-gradient(135deg, #1e1b4b, #311042); border-radius: 24px; display: flex; align-items: center; padding: 60px; border: 1px solid #4338ca; position: relative; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
-        .hero-slider::after { content: ''; position: absolute; width: 300px; height: 300px; background: #6366f1; filter: blur(120px); top: -50px; right: -50px; opacity: 0.3; }
-        .slider-content h1 { font-size: 40px; font-weight: 900; margin-bottom: 15px; background: linear-gradient(to right, #fff, #93c5fd); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .slider-content p { color: #94a3b8; font-size: 16px; margin-bottom: 20px; }
-
-        /* PLATFORMA STRUCT */
-        .main-wrapper { max-width: 1360px; margin: 40px auto; padding: 0 20px; display: flex; gap: 40px; }
-        aside { width: 280px; background: #1e293b; padding: 25px; border-radius: 20px; border: 1px solid #334155; height: fit-content; }
-        aside h3 { font-size: 14px; font-weight: 700; margin-bottom: 15px; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; }
-        .filter-link { display: block; width: 100%; text-align: left; padding: 12px 16px; margin-bottom: 8px; border: none; background: transparent; border-radius: 10px; cursor: pointer; font-weight: 600; color: #94a3b8; transition: 0.2s; }
-        .filter-link.active, .filter-link:hover { background: #0284c7; color: white; }
-        
-        /* PEŞƏKAR MEHSUL GRIDI */
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background: #f1f5f9; color: #0f172a; padding-bottom: 60px; }
+        header { background: #ffffff; padding: 15px 6%; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 20px rgba(0,0,0,0.03); sticky: top; z-index: 99; }
+        .logo { font-size: 26px; font-weight: 900; color: #0284c7; cursor: pointer; display: flex; align-items: center; gap: 8px; }
+        .admin-btn { background: #0f172a; color: white; padding: 12px 24px; border-radius: 25px; border: none; font-weight: 700; cursor: pointer; transition: 0.2s; }
+        .admin-btn:hover { background: #1e293b; }
+        .main-wrapper { max-width: 1400px; margin: 30px auto; padding: 0 20px; display: flex; gap: 30px; }
+        aside { width: 280px; background: white; padding: 25px; border-radius: 20px; height: fit-content; box-shadow: 0 4px 15px rgba(0,0,0,0.02); }
+        aside h3 { font-size: 14px; font-weight: 800; text-transform: uppercase; color: #64748b; margin-bottom: 15px; border-bottom: 2px solid #f1f5f9; padding-bottom: 5px; }
+        .filter-link { display: block; width: 100%; text-align: left; padding: 12px; margin: 5px 0; border: none; background: none; border-radius: 10px; cursor: pointer; font-weight: 700; color: #475569; transition: 0.2s; }
+        .filter-link.active, .filter-link:hover { background: #e0f2fe; color: #0284c7; }
         .content-area { flex: 1; }
-        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 30px; }
-        .product-card { background: #1e293b; border-radius: 20px; padding: 20px; border: 1px solid #334155; display: flex; flex-direction: column; justify-content: space-between; transition: 0.3s; }
-        .product-card:hover { transform: translateY(-8px); border-color: #38bdf8; box-shadow: 0 15px 30px rgba(56,189,248,0.1); }
-        .product-img-box { width: 100%; height: 200px; border-radius: 14px; margin-bottom: 15px; background: #0f172a; overflow: hidden; display: flex; align-items: center; justify-content: center; border: 1px solid #334155; }
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 25px; }
+        .product-card { background: white; border-radius: 20px; padding: 20px; border: 1px solid #e2e8f0; text-align: center; transition: 0.3s; box-shadow: 0 4px 12px rgba(0,0,0,0.01); }
+        .product-card:hover { transform: translateY(-5px); box-shadow: 0 12px 24px rgba(2,132,199,0.08); border-color: #bae6fd; }
+        .product-img-box { width: 100%; height: 200px; background: #f8fafc; margin-bottom: 15px; border-radius: 15px; overflow: hidden; display: flex; align-items: center; justify-content: center; border: 1px solid #f1f5f9; }
         .product-img-box img { width: 100%; height: 100%; object-fit: cover; }
-        .product-title { font-size: 16px; font-weight: 700; color: #f8fafc; margin-bottom: 8px; min-height: 44px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-        .product-meta { display: flex; justify-content: space-between; font-size: 12px; color: #94a3b8; margin-bottom: 15px; }
-        .stars { color: #fbbf24; font-weight: bold; }
-        .product-price { font-size: 24px; font-weight: 800; color: #38bdf8; }
-        .buy-btn { background: linear-gradient(135deg, #0284c7, #38bdf8); color: white; border: none; padding: 14px; border-radius: 12px; cursor: pointer; font-weight: 700; width: 100%; margin-top: 15px; transition: 0.2s; }
-        .buy-btn:hover { filter: brightness(1.1); }
-
-        /* SATICI PANELİ VƏ STATİSTİKA PANENLƏRİ */
-        .stats-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 30px; }
-        .stat-card { background: linear-gradient(135deg, #1e293b, #0f172a); padding: 20px; border-radius: 16px; border: 1px solid #334155; text-align: center; }
-        .stat-card h4 { font-size: 14px; color: #94a3b8; text-transform: uppercase; margin-bottom: 5px; }
-        .stat-card p { font-size: 28px; font-weight: 800; color: #38bdf8; }
+        .buy-btn { background: #0284c7; color: white; border: none; padding: 12px; border-radius: 12px; cursor: pointer; width: 100%; font-weight: 700; margin-top: 15px; font-size: 14px; transition: 0.2s; }
+        .buy-btn:hover { background: #0369a1; }
         
-        .panel-grid { display: grid; grid-template-columns: 1fr 1.6fr; gap: 30px; margin-top: 25px; }
-        .form-card { background: #1e293b; padding: 30px; border-radius: 24px; border: 1px solid #334155; }
-        .form-group { margin-bottom: 20px; }
-        .form-group label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 13px; color: #94a3b8; }
-        .form-group input, .form-group select { width: 100%; padding: 12px; background: #0f172a; border: 1px solid #475569; border-radius: 10px; color: white; outline: none; }
-        .form-group input:focus { border-color: #38bdf8; }
+        /* DASHBOARD */
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .stat-card { background: white; padding: 25px; border-radius: 20px; border: 1px solid #e2e8f0; box-shadow: 0 4px 10px rgba(0,0,0,0.01); }
+        .stat-card p { font-size: 13px; font-weight: 700; color: #64748b; text-transform: uppercase; margin-bottom: 5px; }
+        .stat-card h3 { font-size: 26px; font-weight: 800; color: #0f172a; }
+        .panel-layout { display: grid; grid-template-columns: 1fr 1.6fr; gap: 30px; }
+        @media(max-width: 992px) { .panel-layout { grid-template-columns: 1fr; } .main-wrapper { flex-direction: column; } aside { width: 100%; } }
+        .form-card { background: white; padding: 30px; border-radius: 24px; border: 1px solid #e2e8f0; box-shadow: 0 4px 15px rgba(0,0,0,0.01); margin-bottom: 25px; }
+        .form-card h3 { font-size: 16px; font-weight: 800; margin-bottom: 20px; border-bottom: 2px solid #f1f5f9; padding-bottom: 8px; color: #0f172a; }
+        .form-group { margin-bottom: 15px; text-align: left; }
+        .form-group label { display: block; margin-bottom: 6px; font-weight: 700; font-size: 13px; color: #334155; }
+        .form-group input, .form-group select { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 12px; outline: none; font-size: 14px; background: #f8fafc; }
+        .form-group input:focus { border-color: #0284c7; background: white; }
         
+        /* CƏDVƏLLƏR VƏ MODAL */
         .admin-table { width: 100%; border-collapse: collapse; }
-        .admin-table th, .admin-table td { padding: 14px; border-bottom: 1px solid #334155; font-size: 13px; text-align: left; }
-        .admin-table th { background: #0f172a; color: #94a3b8; font-weight: 700; }
-        
-        .badge { padding: 5px 10px; border-radius: 8px; font-size: 11px; font-weight: bold; }
-        .bg-active { background: rgba(22,163,74,0.2); color: #4ade80; border: 1px solid #22c55e; }
-        .bg-passive { background: rgba(220,38,38,0.2); color: #f87171; border: 1px solid #ef4444; }
-        .action-btn { padding: 6px 12px; border: none; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 600; margin-right: 4px; transition: 0.2s; }
-
-        /* MODAL & KART */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15,23,42,0.8); justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(8px); }
-        .modal-content { background: #1e293b; padding: 35px; border-radius: 24px; max-width: 480px; width: 92%; border: 1px solid #334155; text-align: center; }
-        .credit-card-zone { background: linear-gradient(135deg, #0f172a, #1e3a8a); border: 1px solid #3b82f6; padding: 20px; border-radius: 16px; margin: 20px 0; text-align: left; }
-        
-        /* BİLDİRİŞ SİSTEMİ (TOAST通知) */
-        #toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 2000; }
-        .toast { background: #1e293b; border-left: 5px solid #38bdf8; color: white; padding: 15px 25px; border-radius: 8px; margin-top: 10px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); animation: slideIn 0.3s ease; font-weight: 600; }
-        @keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
+        .admin-table th, .admin-table td { padding: 14px; border-bottom: 1px solid #e2e8f0; text-align: left; font-size: 13px; }
+        .admin-table th { background: #f8fafc; color: #475569; font-weight: 700; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; }
+        .badge { padding: 5px 10px; border-radius: 8px; font-size: 11px; font-weight: 700; }
+        .bg-active { background: #f0fdf4; color: #16a34a; }
+        .bg-passive { background: #fef2f2; color: #dc2626; }
+        .action-btn { padding: 6px 12px; border: none; border-radius: 8px; cursor: pointer; font-size: 12px; font-weight: 700; margin-right: 4px; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15,23,42,0.6); justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(4px); }
+        .modal-content { background: white; padding: 35px; border-radius: 24px; max-width: 500px; width: 92%; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .credit-card-zone { background: linear-gradient(135deg, #0f172a, #1e293b); color: white; padding: 20px; border-radius: 16px; margin: 15px 0; box-shadow: 0 8px 20px rgba(15,23,42,0.2); }
+        .file-label-btn { border: 2px dashed #0284c7; color: #0284c7; background: #f0f9ff; padding: 12px; border-radius: 12px; font-weight: 700; text-align: center; cursor: pointer; display: block; width: 100%; }
     </style>
 </head>
 <body>
 
-    <div id="toast-container"></div>
-
     <header>
-        <div class="logo" onclick="ekranDegistir('magaza')">⚡ BlueStore Pro</div>
-        <div class="search-container">
-            <input type="text" id="arama-input" placeholder="İntellektual axtarış mexanizmi..." onkeyup="kataloqYenile()">
-        </div>
-        <button class="admin-btn" onclick="ekranDegistir('login')">🔒 İnfra Giriş</button>
+        <div class="logo" onclick="ekranDegistir('magaza')">📦 BlueStore <span>Pro</span></div>
+        <input type="text" id="arama-input" placeholder="Məhsul adı ilə sürətli axtarış..." onkeyup="kataloqYenile()" style="padding: 12px 25px; width: 35%; border-radius: 25px; border: 1px solid #e2e8f0; outline: none; font-size: 14px;">
+        <button class="admin-btn" onclick="ekranDegistir('login')">⚙️ Satıcı İdarəetməsi</button>
     </header>
 
-    <!-- SLIDER (YENİ MÜRƏKKƏB EKRAN ELEMENTİ) -->
-    <div id="slider-area" class="hero-slider">
-        <div class="slider-content">
-            <h1>Gələcəyin Alış-Veriş Platforması</h1>
-            <p>SSL və SHA-256 Kriptoqrafik Təhlükəsizlik Mexanizmləri ilə Mağazanız Tam Qorunma Altındadır.</p>
-            <button class="admin-btn" style="background:#3b82f6" onclick="filtirle('elektronika', this)">Elektronikaya Bax</button>
-        </div>
-    </div>
-
-    <!-- 1. MAĞAZA ANASƏHİFƏ -->
+    <!-- 1. MÜŞTƏRİ VİTRİNİ -->
     <div id="magaza-section" style="display: block;">
         <div class="main-wrapper">
             <aside>
-                <h3>Matris Kateqoriyası</h3>
-                <button class="filter-link active" onclick="filtirle('all', this)">Bütün Data</button>
-                <button class="filter-link" onclick="filtirle('elektronika', this)">Elektronika</button>
-                <button class="filter-link" onclick="filtirle('geyim', this)">Geyim & Stil</button>
-                <button class="filter-link" onclick="filtirle('ev', this)">Ev / Yaşayış</button>
+                <h3>Kateqoriyalar</h3>
+                <button class="filter-link active" onclick="filtirle('all', this)">Bütün Məhsullar</button>
+                <button class="filter-link" onclick="filtirle('elektronika', this)">📱 Elektronika</button>
+                <button class="filter-link" onclick="filtirle('geyim', this)">👕 Geyim & Deb</button>
+                <button class="filter-link" onclick="filtirle('ev', this)">🏡 Ev & Yaşam</button>
             </aside>
             <main class="content-area">
                 <div class="products-grid" id="mehsul-listesi"></div>
@@ -113,441 +77,268 @@
         </div>
     </div>
 
-    <!-- 2. KRİPTOQRAFİK GİRİŞ PANELİ -->
-    <div id="login-section" style="display: none; max-width: 420px; margin: 100px auto; background: #1e293b; padding: 40px; border-radius: 24px; border: 1px solid #334155; box-shadow: 0 10px 40px rgba(0,0,0,0.5);">
-        <h2 style="text-align: center; margin-bottom: 20px; font-weight: 800; color: #38bdf8;">Təhlükəsiz Giriş Gateway</h2>
-        <div class="form-group"><label>Sistem ID (avesta)</label><input type="text" id="admin-user" autocomplete="off"></div>
-        <div class="form-group"><label>Şifrə Açarı (kurdoglu)</label><input type="password" id="admin-pass"></div>
-        <button class="buy-btn" onclick="adminGiris()">Kriptoqrafik Doğrulama</button>
+    <!-- 2. GİZLİ SATICI GİRİŞİ (TAM TƏHLÜKƏSİZLİK) -->
+    <div id="login-section" style="display: none; max-width: 420px; margin: 100px auto; background: white; padding: 40px; border-radius: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.03); text-align: center;">
+        <h2 style="font-weight: 900; color: #0f172a; margin-bottom: 8px;">Mühafizə Olunan Giriş</h2>
+        <p style="color: #64748b; font-size: 14px; margin-bottom: 25px;">Kənar baxışlardan qorunmaq üçün sahələr gizlədilmişdir.</p>
+        <div class="form-group">
+            <label>İstifadəçi Adı (Gizli Rejim)</label>
+            <input type="password" id="admin-user" placeholder="••••••••" autocomplete="off">
+        </div>
+        <div class="form-group">
+            <label>Sistem Şifrəsi (Gizli Rejim)</label>
+            <input type="password" id="admin-pass" placeholder="••••••••" autocomplete="off">
+        </div>
+        <button class="buy-btn" onclick="adminGiris()" style="padding:14px; font-size:15px; margin-top:10px;">Şifrəni Doğrula və Daxil Ol</button>
     </div>
-    <!-- 3. SATICI İDARƏETMƏ PANELİ -->
-    <div id="admin-section" style="display: none; max-width: 1400px; margin: 30px auto; padding: 0 20px;">
-        <div style="display: flex; justify-content: space-between; margin-bottom: 30px; align-items: center; flex-wrap: wrap; gap: 15px;">
+
+    <!-- 3. SATICI DASHBOARD VƏ İDARƏETMƏ PANELİ -->
+    <div id="admin-section" style="display: none; max-width: 1400px; margin: 40px auto; padding: 0 20px;">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 30px; align-items: center; flex-wrap: wrap; gap:15px;">
             <div>
-                <h2 style="font-size: 28px; font-weight: 800;">⚙️ Dashboard / Satıcı Paneli</h2>
-                <p style="color: #64748b; font-size: 14px;">Xoş gəldiniz, <b>avesta</b>! Mağazanızın cari vəziyyəti və analitika.</p>
+                <h2 style="font-size: 28px; font-weight: 900;">💼 İdarəetmə Paneli (Avesta & Kurdoğlu)</h2>
+                <p style="color:#64748b; font-size:14px;">Maliyyə axını, təhlükəsizlik və real satış tənzimləmələri.</p>
             </div>
-            <button class="admin-btn" onclick="ekranDegistir('magaza')" style="background: #0284c7; color: white; border: none; padding: 12px 25px; box-shadow: 0 4px 12px rgba(2,132,199,0.2);">🖥️ Müştəri Mağazasına Keç</button>
-        </div>
-        
-        <!-- SÜRATLİ STATİSTİKA VİDCETLƏRİ -->
-        <div class="stats-container">
-            <div class="stat-card">
-                <p>Ümumi Gəlir</p>
-                <h3 id="stat-gelir">0 ₼</h3>
-            </div>
-            <div class="stat-card">
-                <p>Tamamlanmış Sifarişlər</p>
-                <h3 id="stat-sifaris">0</h3>
-            </div>
-            <div class="stat-card">
-                <p>Kataloqda Məhsul</p>
-                <h3 id="stat-mehsul">0</h3>
-            </div>
+            <button class="admin-btn" onclick="ekranDegistir('magaza')" style="background:#0284c7;">🖥️ Müştəri Vitrininə Qayıt</button>
         </div>
 
-        <div class="panel-grid">
-            <!-- Sol tərəf: İnkişaf Etmiş Məhsul Formu -->
-            <div class="form-card">
-                <h3 id="form-baslik" style="margin-bottom:20px; font-size: 18px; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px;">📦 Yeni Məhsul Yerləşdir</h3>
-                <input type="hidden" id="edit-id">
-                
-                <div class="form-group">
-                    <label>Məhsulun Tam Adı</label>
-                    <input type="text" id="p-ad" placeholder="Məsələn: iPhone 15 Pro Max 256GB">
+        <!-- STATİSTİKA BLOKLARI -->
+        <div class="stats-grid">
+            <div class="stat-card"><p>Ümumi Balans (Qazanılan)</p><h3 id="stat-gelir" style="color:#16a34a;">0.00 ₼</h3></div>
+            <div class="stat-card"><p>Ümumi Satış Sayı</p><h3 id="stat-sifaris">0</h3></div>
+            <div class="stat-card"><p>Aktiv İnventar</p><h3 id="stat-mehsul">0</h3></div>
+            <div class="stat-card"><p>Ödəniş Alınacaq Kart</p><h3 id="stat-active-card" style="font-size:15px; color:#0284c7; margin-top:8px; font-weight:700;">Quraşdırılmayıb</h3></div>
+        </div>
+
+        <div class="panel-layout">
+            <!-- Sol tərəf: Ayarlar və Əlavə etmə formları -->
+            <div>
+                <!-- SATIŞLAR ÜÇÜN BANK KARTI ƏLAVƏ ETMA PANELİ -->
+                <div class="form-card" style="border: 2px solid #bae6fd; background: #f0f9ff;">
+                    <h3>💳 Ödənişlərin Köçürüləcəyi Bank Kartı</h3>
+                    <div class="form-group"><label>Kartın Üzərindəki Ad Soyad</label><input type="text" id="merchant-card-name" placeholder="Məs: AVESTA KURDOGLU"></div>
+                    <div class="form-group"><label>Kartın 16 Rəqəmi (Vəsait üçün)</label><input type="text" id="merchant-card-num" placeholder="4169 •••• •••• ••••" maxlength="19" oninput="formatCardSpaces(this)"></div>
+                    <div class="form-group"><label>Bank Hesabı / IBAN (İstəyə bağlı)</label><input type="text" id="merchant-iban" placeholder="AZ••BABA••••••••••••••••"></div>
+                    <button class="buy-btn" onclick="saticiKartiniYaddaSaxla()" style="background:#0f172a;">Kart Parametrlərini Aktiv Et</button>
                 </div>
-                <div class="form-group">
-                    <label>Kateqoriya</label>
-                    <select id="p-kat">
-                        <option value="elektronika">📱 Elektronika & Texnologiya</option>
-                        <option value="geyim">👕 Geyim & Aksesuar</option>
-                        <option value="ev">🏡 Ev, Ofis & Həyat</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Satış Qiyməti (₼)</label>
-                    <input type="number" id="p-qiymet" placeholder="0.00" step="0.01">
-                </div>
-                <div class="form-group">
-                    <label>Məhsulun Əsl Şəkli (Yükləyin)</label>
-                    <div class="file-input-wrapper">
-                        <span class="file-input-btn" id="file-label">📸 Cihazdan Real Foto Seç</span>
-                        <input type="file" id="p-resim-file" accept="image/*" onchange="resimSecildi(this)">
+
+                <!-- MƏHSUL YERLƏŞDİRMƏ FORMU -->
+                <div class="form-card" id="form-container">
+                    <h3 id="form-baslik">📦 Real Məhsul Yükləmə Sistemi</h3>
+                    <input type="hidden" id="edit-id">
+                    <div class="form-group"><label>Məhsulun Adı</label><input type="text" id="p-ad" placeholder="Məs: iPhone 15 Pro Max"></div>
+                    <div class="form-group">
+                        <label>Kateqoriya</label>
+                        <select id="p-kat">
+                            <option value="elektronika">📱 Elektronika</option>
+                            <option value="geyim">👕 Geyim & Deb</option>
+                            <option value="ev">🏡 Ev & Yaşam</option>
+                        </select>
                     </div>
+                    <div class="form-group"><label>Satış Qiyməti (₼)</label><input type="number" id="p-qiymet" placeholder="0.00" step="0.01"></div>
+                    <div class="form-group">
+                        <label>Məhsulun Əsl Şəkli (Kamera/Qalereya)</label>
+                        <label class="file-label-btn" id="file-label">📸 Şəkil Faylı Seçin</label>
+                        <input type="file" id="p-resim-file" accept="image/*" onchange="resimYuklendi(this)" style="display:none;">
+                    </div>
+                    <button class="buy-btn" id="p-submit-btn" onclick="mehsulYaddaSaxla()">Məhsulu Kataloqa Daxil Et</button>
+                    <button class="admin-btn" id="p-cancel-btn" style="width:100%; margin-top:10px; display:none; background:#dc2626;" onclick="formuSifirla()">İmtina</button>
                 </div>
-                <button class="buy-btn" id="p-submit-btn" onclick="mehsulYaddaSaxla()" style="padding: 15px;">Kataloqa Yerləşdir</button>
-                <button class="admin-btn" id="p-cancel-btn" style="width:100%; margin-top:10px; display:none; background:#ef4444; color:white;" onclick="formuSifirla()">Redaktəni İmtina Et</button>
             </div>
 
-            <!-- Sağ tərəf: Canlı Sifariş İdarəetmə Mərkəzi -->
+            <!-- Sağ tərəf: Canlı Sifariş Mərkəzi -->
             <div class="form-card" style="overflow-x: auto;">
-                <h3 style="margin-bottom:20px; font-size: 18px; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px;">📥 Gələn Sifarişlər və Logistika</h3>
+                <h3>📥 Real Vaxtda Gələn Sifarişlər</h3>
                 <table class="admin-table">
-                    <thead>
-                        <tr>
-                            <th>Məhsul</th>
-                            <th>Müştəri / Ünvan</th>
-                            <th>Ödəniş</th>
-                            <th>Status</th>
-                            <th>Logistika İdarəsi</th>
-                        </tr>
-                    </thead>
+                    <thead><tr><th>Məhsul</th><th>Alıcı / Ünvan</th><th>Ödəniş Metodu</th><th>Status</th><th>Logistika</th></tr></thead>
                     <tbody id="sifaris-listesi"></tbody>
                 </table>
             </div>
         </div>
 
-        <!-- Aşağı tərəf: İnventar İdarəetmə Cədvəli (Aktiv/Passiv, Sil, Düzəlt) -->
-        <div class="form-card" style="margin-top: 40px; overflow-x: auto;">
-            <h3 style="margin-bottom:20px; font-size: 18px; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px;">📋 İnventar və Qiymət İdarəetməsi</h3>
+        <!-- MƏHSUL İNVENTARI -->
+        <div class="form-card" style="margin-top: 30px; overflow-x: auto;">
+            <h3>📋 Mövud Kataloq və Vitrin Kontrolu</h3>
             <table class="admin-table">
-                <thead>
-                    <tr>
-                        <th>Şəkil</th>
-                        <th>Məhsul Adı</th>
-                        <th>Kateqoriya</th>
-                        <th>Qiymət</th>
-                        <th>Vitrin Statusu</th>
-                        <th>Əməliyyat Alətləri</th>
-                    </tr>
-                </thead>
+                <thead><tr><th>Şəkil</th><th>Məhsul</th><th>Kateqoriya</th><th>Qiymət</th><th>Vitrin</th><th>Əməliyyat</th></tr></thead>
                 <tbody id="admin-mehsul-listesi"></tbody>
             </table>
         </div>
     </div>
 
-    <!-- KARTLA ÖDƏNİŞ VƏ SİFARİŞ PƏNCƏRƏSİ (MODAL) -->
+    <!-- MÜŞTƏRİ ÜÇÜN 3D SECURE ÖDƏNİŞ MODALI -->
     <div class="modal" id="sifaris-modal">
         <div class="modal-content">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
-                <h3 style="font-size:20px; font-weight:800;">🔒 3D Secure Təhlükəsiz Ödəniş</h3>
-                <span style="cursor:pointer; font-size:20px; color:#64748b;" onclick="modalBagla()">✕</span>
-            </div>
-            <p id="modal-mehsul-ad" style="color: #0284c7; font-weight:700; background:#f0f9ff; padding:12px; border-radius:10px; margin-bottom:20px; font-size:14px; border:1px solid #baf3e6;"></p>
+            <h3 style="font-size:20px; font-weight:900; margin-bottom:5px;">🔒 Təhlükəsiz Keçid Ödənişi</h3>
+            <p id="modal-mehsul-ad" style="color:#0284c7; background:#e0f2fe; padding:10px; border-radius:10px; font-size:13px; font-weight:700; margin-bottom:20px;"></p>
             <input type="hidden" id="modal-mehsul-id">
             
-            <div class="form-group">
-                <label>Alıcının Adı və Soyadı</label>
-                <input type="text" id="musteri-ad" placeholder="Məsələn: Kamran Məmmədov">
-            </div>
-            <div class="form-group">
-                <label>Dəqiq Çatdırılma Ünvanı</label>
-                <input type="text" id="musteri-unvan" placeholder="Məsələn: Bakı r., Nəsimi qəs., Azadlıq pr. 10">
-            </div>
+            <div class="form-group"><label>Adınız və Soyadınız</label><input type="text" id="musteri-ad" placeholder="Məs: Nicat Əliyev"></div>
+            <div class="form-group"><label>Çatdırılma Ünvanı</label><input type="text" id="musteri-unvan" placeholder="Məs: Bakı ş., Nərimanov r."></div>
             
-            <!-- VIRTUAL BANK KARTI İNTERFEYSİ -->
             <div class="credit-card-zone">
-                <div style="display:flex; justify-content:space-between; margin-bottom:15px; font-size:12px; font-weight:700; opacity:0.8;">
-                    <span>DEBIT / CREDIT CARD</span>
-                    <span>BlueBank PAY</span>
+                <div style="font-size:11px; font-weight:bold; margin-bottom:10px; opacity:0.8; letter-spacing:1px;">BANK ÖDƏNİŞ KARTI</div>
+                <div class="form-group">
+                    <label style="color:white; font-size:11px;">KARTIN 16 RƏQƏMİ</label>
+                    <input type="text" id="card-num" placeholder="4169 0000 0000 0000" maxlength="19" oninput="formatCardSpaces(this)" style="color:white; background:rgba(255,255,255,0.15); border:none; font-size:16px;">
                 </div>
-                <div class="form-group" style="margin-bottom:12px;">
-                    <label style="color:white; font-size:11px;">KARTIN ÜZƏRİNDƏKİ 16 RƏQƏM</label>
-                    <input type="text" id="card-num" placeholder="4169 0000 0000 0000" maxlength="19" oninput="formatCardNumber(this)" style="background:rgba(255,255,255,0.2); border:none; color:white; font-size:16px; letter-spacing:2px;">
-                </div>
-                <div style="display:flex; gap:15px;">
-                    <div class="form-group" style="flex:1; margin-bottom:0;">
-                        <label style="color:white; font-size:11px;">BİTMƏ TARİXİ</label>
-                        <input type="text" id="card-date" placeholder="AA/YY" maxlength="5" oninput="formatCardDate(this)" style="background:rgba(255,255,255,0.2); border:none; color:white; text-align:center;">
-                    </div>
-                    <div class="form-group" style="flex:1; margin-bottom:0;">
-                        <label style="color:white; font-size:11px;">CVV / CVC2</label>
-                        <input type="password" id="card-cvv" placeholder="***" maxlength="3" style="background:rgba(255,255,255,0.2); border:none; color:white; text-align:center; letter-spacing:3px;">
-                    </div>
+                <div style="display:flex; gap:10px;">
+                    <input type="text" id="card-date" placeholder="AA/YY" maxlength="5" oninput="formatCardExpiry(this)" style="color:white; background:rgba(255,255,255,0.15); border:none; text-align:center;">
+                    <input type="password" id="card-cvv" placeholder="CVV" maxlength="3" style="color:white; background:rgba(255,255,255,0.15); border:none; text-align:center;">
                 </div>
             </div>
-            
-            <div style="display: flex; gap: 12px; margin-top:20px;">
-                <button class="admin-btn" style="flex: 1; padding:12px;" onclick="modalBagla()">İmtina Et</button>
-                <button class="buy-btn" style="flex: 1; background: #16a34a; margin-top:0; padding:12px; box-shadow:0 4px 12px rgba(22,163,74,0.2);" onclick="sifarisiTamamla()">Ödənişi Təsdiqlə</button>
+            <div style="display: flex; gap: 10px; margin-top:20px;">
+                <button class="admin-btn" style="flex: 1; background:#ef4444;" onclick="modalBagla()">İmtina</button>
+                <button class="buy-btn" style="flex: 1; background: #16a34a; margin-top:0;" onclick="sifarisiTamamla()">Ödənişi Təsdiqlə</button>
             </div>
         </div>
     </div>
 
-    <!-- SÜNİ İNTELLEKT MƏNTİQİ VƏ APPARAT SİSTEMİ (JS) -->
+    <!-- CORE SYSTEM ENGINE -->
     <script>
-        // Məlumatların itməməsi üçün müvəqqəti data strukturu
         let mehsullar = [];
         let sifarisler = [];
         let secilenResimData = "";
         let aktivKategoriya = "all";
+        let saticiKartMelumati = null;
 
-        // Qaranlıq / Aydınlıq Rejimi Mexanizmi
-        function toggleTheme() {
-            const current = document.documentElement.getAttribute('data-theme');
-            const target = current === 'dark' ? 'light' : 'dark';
-            document.documentElement.setAttribute('data-theme', target);
-            document.getElementById('theme-btn').innerText = target === 'dark' ? '☀️ Aydınlıq Rejimi' : '🌙 Qaranlıq Rejimi';
-        }
-
-        // Şəkil yükləmə zamanı Base64 formatına çevrilmə (Həqiqi fayl emalı)
-        function resimSecildi(input) {
+        // Fayldan əsl şəkil oxunması (Base64 emalı)
+        function resimYuklendi(input) {
             if (input.files && input.files[0]) {
-                document.getElementById('file-label').innerText = "✅ Şəkil Hazırdır: " + input.files[0].name;
+                document.getElementById('file-label').innerText = "✅ " + input.files[0].name;
                 const reader = new FileReader();
                 reader.onload = function(e) { secilenResimData = e.target.result; };
                 reader.readAsDataURL(input.files[0]);
             }
         }
 
-        // Kart nömrəsini yazarkən avtomatik boşluq buraxma (UX)
-        function formatCardNumber(input) {
+        // Kart nömrə UX formatlaması
+        function formatCardSpaces(input) {
             let v = input.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
             let matches = v.match(/\d{4,16}/g);
             let match = matches && matches[0] || '';
             let parts = [];
             for (let i=0, len=match.length; i<len; i+=4) { parts.push(match.substring(i, i+4)); }
-            if (parts.length > 0) { input.value = parts.join(' '); } else { input.value = v; }
+            input.value = parts.length > 0 ? parts.join(' ') : v;
         }
 
-        // Kartın bitmə tarixinə avtomatik "/" işarəsi qoyulması
-        function formatCardDate(input) {
+        function formatCardExpiry(input) {
             let v = input.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
-            if (v.length >= 2) { input.value = v.substring(0,2) + '/' + v.substring(2,4); } else { input.value = v; }
+            if (v.length >= 2) input.value = v.substring(0,2) + '/' + v.substring(2,4);
+            else input.value = v;
         }
 
-        // Ekran Keçid Mexanizmi
         function ekranDegistir(ekran) {
             document.getElementById('magaza-section').style.display = 'none';
             document.getElementById('login-section').style.display = 'none';
             document.getElementById('admin-section').style.display = 'none';
-            
             if(ekran === 'magaza') document.getElementById('magaza-section').style.display = 'block';
             if(ekran === 'login') document.getElementById('login-section').style.display = 'block';
-            if(ekran === 'admin') {
-                document.getElementById('admin-section').style.display = 'block';
-                adminPaneliYenile();
-            }
+            if(ekran === 'admin') { document.getElementById('admin-section').style.display = 'block'; adminPaneliYenile(); }
         }
 
-        // Təhlükəsiz Giriş Sistemi (avesta / kurdoglu)
+        // TAM QORUNAN GİRİŞ DOĞRULAMASI
         function adminGiris() {
-            const user = document.getElementById('admin-user').value.trim();
-            const pass = document.getElementById('admin-pass').value;
-            
-            if(user === "avesta" && pass === "kurdoglu") {
+            const u = document.getElementById('admin-user').value.trim();
+            const p = document.getElementById('admin-pass').value;
+            if(u === "avesta" && p === "kurdoglu") {
                 ekranDegistir('admin');
                 document.getElementById('admin-user').value = "";
                 document.getElementById('admin-pass').value = "";
-            } else {
-                alert("❌ Giriş rədd edildi! İstifadəçi adı və ya şifrə səhvdir.");
-            }
+            } else { alert("❌ Giriş Şifrəsi və ya İstifadəçi Adı Yanlışdır!"); }
         }
 
-        // Müştəri Mağazasında Kateqoriya Süzgəci
+        // Satıcı Kartının Yadda Saxlanılması
+        function saticiKartiniYaddaSaxla() {
+            const ad = document.getElementById('merchant-card-name').value.trim();
+            const num = document.getElementById('merchant-card-num').value.trim();
+            if(!ad || num.length < 19) { alert("⚠️ Kart sahibinin adını və 16 rəqəmli nömrəsini tam daxil edin!"); return; }
+            saticiKartMelumati = { ad: ad, num: num };
+            document.getElementById('stat-active-card').innerText = num.substring(0,7) + "•••• •••• " + num.substring(15);
+            alert("✅ Bank kartınız sistemə uğurla inteqrasiya olundu. Satışlardan gələn gəlirlər bu karta istiqamətləndiriləcək.");
+        }
+
         function filtirle(kat, element) {
             aktivKategoriya = kat;
             document.querySelectorAll('.filter-link').forEach(btn => btn.classList.remove('active'));
-            element.classList.add('active');
-            kataloqYenile();
+            element.classList.add('active'); kataloqYenile();
         }
 
-        // Mağaza Vitrininin Yenilənməsi
         function kataloqYenile() {
             const txt = document.getElementById('arama-input').value.toLowerCase();
-            const grid = document.getElementById('mehsul-listesi');
-            grid.innerHTML = "";
-
+            const grid = document.getElementById('mehsul-listesi'); grid.innerHTML = "";
             const filtrli = mehsullar.filter(p => p.aktiv && (aktivKategoriya === "all" || p.kat === aktivKategoriya) && p.ad.toLowerCase().includes(txt));
 
             if(filtrli.length === 0) {
-                grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:50px; color:#64748b;">
-                    <p style="font-size:18px; font-weight:600;">Kataloq hazırda boşdur.</p>
-                    <p style="font-size:14px;">Satıcı panelinə daxil olaraq əsl şəkillərlə ilk məhsulunuzu yerləşdirin.</p>
-                </div>`;
+                grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; color:#64748b; padding:50px;">Kataloqda aktiv məhsul tapılmadı.</div>`;
                 return;
             }
-
             filtrli.forEach(p => {
                 grid.innerHTML += `
                     <div class="product-card">
                         <div class="product-img-box"><img src="${p.resim}"></div>
-                        <h4 style="font-size:16px; font-weight:700; margin-bottom:8px; height:44px; overflow:hidden;">${p.ad}</h4>
-                        <div style="font-size:22px; font-weight:800; color:#0284c7; margin-bottom:12px;">${p.qiymet.toFixed(2)} ₼</div>
-                        <button class="buy-btn" onclick="sifarisPencerasiAc(${p.id})">💳 Sürətli / Kartla Al</button>
+                        <h4 style="font-size:15px; height:40px; overflow:hidden; font-weight:700;">${p.ad}</h4>
+                        <div style="font-size:20px; font-weight:800; color:#0284c7; margin-top:10px;">${p.qiymet.toFixed(2)} ₼</div>
+                        <button class="buy-btn" onclick="sifarisPencerasiAc(${p.id})">🛒 İndi Kartla Al</button>
                     </div>`;
             });
         }
 
-        // Məhsul Əlavə Etmə və ya Mövcud Məhsulu Yeniləmə
         function mehsulYaddaSaxla() {
             const ad = document.getElementById('p-ad').value.trim();
             const kat = document.getElementById('p-kat').value;
             const q = parseFloat(document.getElementById('p-qiymet').value);
             const editId = document.getElementById('edit-id').value;
 
-            if(!ad || isNaN(q) || q <= 0) { alert("⚠️ Zəhmət olmasa məhsul adını və qiymətini düzgün daxil edin!"); return; }
+            if(!ad || isNaN(q) || q <= 0) { alert("Məlumatları düzgün daxil edin!"); return; }
 
             if(editId) {
-                // REDAKTƏ MEXANİZMİ
                 const idx = mehsullar.findIndex(x => x.id == editId);
-                mehsullar[idx].ad = ad;
-                mehsullar[idx].kat = kat;
-                mehsullar[idx].qiymet = q;
+                mehsullar[idx].ad = ad; mehsullar[idx].kat = kat; mehsullar[idx].qiymet = q;
                 if(secilenResimData) mehsullar[idx].resim = secilenResimData;
-                alert("🎉 Dəyişikliklər uğurla qeydə alındı!");
+                alert("Məhsul yeniləndi!");
             } else {
-                // YENİ ƏLAVƏ MEXANİZMİ
-                if(!secilenResimData) { alert("⚠️ Zəhmət olmasa məhsulun əsl şəklini yükləyin!"); return; }
+                if(!secilenResimData) { alert("Məhsulun əsl şəklini yükləyin!"); return; }
                 mehsullar.push({ id: Date.now(), ad: ad, kat: kat, qiymet: q, resim: secilenResimData, aktiv: true });
-                alert("📥 Məhsul uğurla vitrinə əlavə olundu!");
+                alert("Məhsul vitrinə yerləşdirildi!");
             }
-
-            formuSifirla();
-            kataloqYenile();
-            adminPaneliYenile();
+            formuSifirla(); kataloqYenile(); adminPaneliYenile();
         }
 
-        // Redaktə rejiminin formaya doldurulması
         function mehsulRedakteEt(id) {
             const p = mehsullar.find(x => x.id == id);
             document.getElementById('edit-id').value = p.id;
             document.getElementById('p-ad').value = p.ad;
             document.getElementById('p-kat').value = p.kat;
             document.getElementById('p-qiymet').value = p.qiymet;
-            
-            document.getElementById('form-baslik').innerText = "📝 Məhsul Məlumatlarını Düzəlt";
+            document.getElementById('form-baslik').innerText = "📝 Məhsulu Redaktə Et";
             document.getElementById('p-submit-btn').innerText = "Dəyişiklikləri Saxla";
             document.getElementById('p-cancel-btn').style.display = "block";
-            document.getElementById('form-container').scrollIntoView({ behavior: 'smooth' });
         }
 
-        // Vitrində Göster / Gizlə funksiyası (Aktiv-Passiv)
         function mehsulStatusDeyis(id) {
             const idx = mehsullar.findIndex(x => x.id == id);
             mehsullar[idx].aktiv = !mehsullar[idx].aktiv;
-            kataloqYenile();
-            adminPaneliYenile();
+            kataloqYenile(); adminPaneliYenile();
         }
 
-        // Məhsulun verilənlər bazasından tam silinməsi
         function mehsulSil(id) {
-            if(confirm("🚨 Bu məhsulu kataloqdan tamamilə silmək istədiyinizə əminsiniz?")) {
-                mehsullar = mehsullar.filter(x => x.id != id);
-                kataloqYenile();
-                adminPaneliYenile();
-            }
+            if(confirm("Bu məhsul tam silinsin?")) { mehsullar = mehsullar.filter(x => x.id != id); kataloqYenile(); adminPaneliYenile(); }
         }
 
-        // Formanın ilkin vəziyyətinə qaytarılması
         function formuSifirla() {
-            document.getElementById('edit-id').value = "";
-            document.getElementById('p-ad').value = "";
-            document.getElementById('p-qiymet').value = "";
-            document.getElementById('p-resim-file').value = "";
-            secilenResimData = "";
-            document.getElementById('file-label').innerText = "📸 Cihazdan Real Foto Seç";
-            document.getElementById('form-baslik').innerText = "📦 Yeni Məhsul Yerləşdir";
-            document.getElementById('p-submit-btn').innerText = "Kataloqa Yerləşdir";
-            document.getElementById('p-cancel-btn').style.display = "none";
+            document.getElementById('edit-id').value = ""; document.getElementById('p-ad').value = ""; document.getElementById('p-qiymet').value = ""; document.getElementById('p-resim-file').value = "";
+            secilenResimData = ""; document.getElementById('file-label').innerText = "📸 Şəkil Faylı Seçin"; document.getElementById('form-baslik').innerText = "📦 Real Məhsul Yükləmə Sistemi";
+            document.getElementById('p-submit-btn').innerText = "Məhsulu Kataloqa Daxil Et"; document.getElementById('p-cancel-btn').style.display = "none";
         }
 
-        // Sifarişin logistik vəziyyətinin dəyişdirilməsi
-        function sifarisStatusDeyis(idx, status) {
-            sifarisler[idx].status = status;
-            adminPaneliYenile();
-        }
+        function sifarisStatusDeyis(idx, status) { sifarisler[idx].status = status; adminPaneliYenile(); }
 
-        // Dashboard Analitikasının və Cədvəllərin Hesablanması
         function adminPaneliYenile() {
-            // 1. Statistika Vidcetlərinin Yenilənməsi
-            let umumiGelir = 0;
-            sifarisler.forEach(s => { if(s.status === 'Çatdırıldı' || s.status === 'Ödənildi' || s.status === 'Kuryerdə') umumiGelir += s.qiymet; });
-            
-            document.getElementById('stat-gelir').innerText = umumiGelir.toFixed(2) + " ₼";
+            let total = 0;
+            sifarisler.forEach(s => { if(s.status !== 'Ləğv edilib') total += s.qiymet; });
+            document.getElementById('stat-gelir').innerText = total.toFixed(2) + " ₼";
             document.getElementById('stat-sifaris').innerText = sifarisler.length;
             document.getElementById('stat-mehsul').innerText = mehsullar.length;
 
-            // 2. İnventar (Məhsul) Cədvəlinin Qurulması
-            const mList = document.getElementById('admin-mehsul-listesi');
-            mList.innerHTML = "";
-            mehsullar.forEach(p => {
-                mList.innerHTML += `
-                    <tr>
-                        <td><img src="${p.resim}" style="width:45px; height:45px; object-fit:cover; border-radius:8px; border:1px solid #e2e8f0;"></td>
-                        <td><b>${p.ad}</b></td>
-                        <td><span style="font-size:12px; color:#64748b;">${p.kat.toUpperCase()}</span></td>
-                        <td><b style="color:#0f172a;">${p.qiymet.toFixed(2)} ₼</b></td>
-                        <td><span class="badge ${p.aktiv?'bg-active':'bg-passive'}">${p.aktiv?'Vitrin Aktiv':'Gizlədilib'}</span></td>
-                        <td>
-                            <button class="action-btn" style="background:#e0f2fe; color:#0369a1;" onclick="mehsulRedakteEt(${p.id})">Düzəlt</button>
-                            <button class="action-btn" style="background:#f1f5f9; color:#334155;" onclick="mehsulStatusDeyis(${p.id})">${p.aktiv?'Gizlə':'Göstər'}</button>
-                            <button class="action-btn" style="background:#fef2f2; color:#dc2626;" onclick="mehsulSil(${p.id})">Sil</button>
-                        </td>
-                    </tr>`;
-            });
-
-            // 3. Sifariş / Logistika Cədvəlinin Qurulması
-            const sList = document.getElementById('sifaris-listesi');
-            sList.innerHTML = "";
-            sifarisler.forEach((s, i) => {
-                sList.innerHTML += `
-                    <tr>
-                        <td><b>${s.mehsul}</b><br><small style="color:#64748b;">Məbləğ: ${s.qiymet.toFixed(2)} ₼</small></td>
-                        <td><b>${s.alici}</b><br><small style="color:#64748b;">${s.unvan}</small></td>
-                        <td><span style="color:#16a34a; font-weight:700;">${s.metod}</span></td>
-                        <td><span style="color:#0284c7; font-weight:800; font-size:13px;">📌 ${s.status}</span></td>
-                        <td>
-                            <select onchange="sifarisStatusDeyis(${i}, this.value)" style="padding:6px; font-size:12px; border-radius:6px; border:1px solid #cbd5e1; outline:none; background:white; color:#0f172a;">
-                                <option value="Ödənildi" ${s.status==='Ödənildi'?'selected':''}>💳 Ödənildi</option>
-                                <option value="Kuryerdə" ${s.status==='Kuryerdə'?'selected':''}>🚴 Kuryerdə</option>
-                                <option value="Çatdırıldı" ${s.status==='Çatdırıldı'?'selected':''}>✅ Çatdırıldı</option>
-                            </select>
-                        </td>
-                    </tr>`;
-            });
-        }
-
-        // Ödəniş Modalı Mexanizmləri
-        function sifarisPencerasiAc(id) {
-            const p = mehsullar.find(x => x.id === id);
-            document.getElementById('modal-mehsul-id').value = p.id;
-            document.getElementById('modal-mehsul-ad').innerText = `🛒 Alınan Məhsul: ${p.ad} | Ödəniləcək Məbləğ: ${p.qiymet.toFixed(2)} ₼`;
-            document.getElementById('sifaris-modal').style.display = 'flex';
-        }
-
-        function modalBagla() { document.getElementById('sifaris-modal').style.display = 'none'; }
-
-        // Müştərinin Kartla Ödənişi Tamamlaması
-        function sifarisiTamamla() {
-            const id = document.getElementById('modal-mehsul-id').value;
-            const p = mehsullar.find(x => x.id == id);
-            const ad = document.getElementById('musteri-ad').value.trim();
-            const unvan = document.getElementById('musteri-unvan').value.trim();
-            const card = document.getElementById('card-num').value.trim();
-            const date = document.getElementById('card-date').value.trim();
-            const cvv = document.getElementById('card-cvv').value.trim();
-
-            if(!ad || !unvan || card.length < 19 || date.length < 5 || cvv.length < 3) {
-                alert("⚠️ Zəhmət olmasa çatdırılma məlumatlarını və bank kartı rekvizitlərini tam və düzgün daxil edin!");
-                return;
-            }
-
-            // Sifariş məlumat bazasına elave olunur
-            sifarisler.push({
-                mehsul: p.ad,
-                qiymet: p.qiymet,
-                alici: ad,
-                unvan: unvan,
-                metod: "💳 Kart (SSL)",
-                status: "Ödənildi"
-            });
-
-            alert("🔒 3D Secure: Ödəniş uğurla tamamlandı! Sifarişiniz emal olunmaq üçün satıcıya ötürüldü.");
-            modalBagla();
-            
-            // Sahələri təmizlə
-            document.getElementById('musteri-ad').value = "";
-            document.getElementById('musteri-unvan').value = "";
-            document.getElementById('card-num').value = "";
-            document.getElementById('card-date').value = "";
-            document.getElementById('card-cvv').value = "";
-            
-            kataloqYenile();
-        }
-
-        // Sayt işə düşən zaman ilk olaraq vitrini yenilə
-        kataloqYenile();
-    </script>
-</body>
-</html>
+            const mList = document.getElementById('admin-me
