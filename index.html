@@ -1,85 +1,98 @@
 <!DOCTYPE html>
-<html lang="az">
+<html lang="az" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BlueStore Global - Mürəkkəb Satış və İdarəetmə Sistemi</title>
+    <title>BlueStore Global - Advanced Merchant OS</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; }
-        body { background-color: #0f172a; color: #f8fafc; min-height: 100vh; padding-bottom: 60px; }
+        :root[data-theme="light"] {
+            --bg-main: #f8fafc; --bg-card: #ffffff; --text-main: #0f172a; --text-muted: #64748b;
+            --border: #e2e8f0; --accent: #0284c7; --accent-hover: #0369a1; --input-bg: #ffffff;
+        }
+        :root[data-theme="dark"] {
+            --bg-main: #0f172a; --bg-card: #1e293b; --text-main: #f8fafc; --text-muted: #94a3b8;
+            --border: #334155; --accent: #38bdf8; --accent-hover: #7dd3fc; --input-bg: #1e293b;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; transition: background-color 0.2s, border-color 0.2s; }
+        body { background: var(--bg-main); color: var(--text-main); padding-bottom: 60px; min-height: 100vh; }
         
-        /* MODERN HEADER */
-        header { background: #1e293b; padding: 20px 6%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 20px rgba(0,0,0,0.2); border-bottom: 1px solid #334155; }
-        .logo { font-size: 26px; font-weight: 900; color: #38bdf8; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; }
-        .search-container input { width: 350px; padding: 12px 20px; background: #0f172a; border: 2px solid #334155; border-radius: 25px; color: white; outline: none; transition: 0.3s; }
-        .search-container input:focus { border-color: #38bdf8; }
-        .admin-btn { background: #38bdf8; color: #0f172a; padding: 12px 24px; border-radius: 25px; border: none; font-weight: 700; cursor: pointer; transition: 0.2s; }
-        .admin-btn:hover { background: #0ea5e9; }
+        header { background: var(--bg-card); padding: 15px 6%; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 20px rgba(0,0,0,0.03); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--border); }
+        .logo { font-size: 26px; font-weight: 900; color: var(--accent); cursor: pointer; display: flex; align-items: center; gap: 8px; }
+        .header-actions { display: flex; align-items: center; gap: 15px; }
+        .admin-btn { background: var(--input-bg); color: var(--text-main); padding: 10px 20px; border-radius: 20px; border: 1px solid var(--border); font-weight: 600; cursor: pointer; }
+        .admin-btn:hover { border-color: var(--accent); }
 
-        /* PLATFORMA STRUKTURU */
-        .main-wrapper { max-width: 1400px; margin: 40px auto; padding: 0 4%; display: flex; gap: 35px; flex-wrap: wrap; }
-        aside { width: 280px; background: #1e293b; padding: 25px; border-radius: 20px; border: 1px solid #334155; height: fit-content; }
-        aside h3 { font-size: 16px; font-weight: 700; margin-bottom: 15px; border-bottom: 2px solid #334155; padding-bottom: 8px; color: #38bdf8; }
-        .filter-link { display: block; width: 100%; text-align: left; padding: 12px; margin-bottom: 6px; border: none; background: none; border-radius: 10px; cursor: pointer; font-weight: 600; color: #94a3b8; transition: 0.2s; }
-        .filter-link.active, .filter-link:hover { background: #38bdf8; color: #0f172a; }
+        .main-wrapper { max-width: 1400px; margin: 40px auto; padding: 0 4%; display: flex; gap: 35px; }
+        aside { width: 280px; background: var(--bg-card); padding: 25px; border-radius: 20px; border: 1px solid var(--border); height: fit-content; }
+        aside h3 { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; color: var(--text-muted); border-bottom: 2px solid var(--border); padding-bottom: 8px; }
+        .filter-link { display: block; width: 100%; text-align: left; padding: 12px; margin-bottom: 6px; border: none; background: none; border-radius: 10px; cursor: pointer; font-weight: 600; color: var(--text-muted); }
+        .filter-link.active, .filter-link:hover { background: rgba(56, 189, 248, 0.1); color: var(--accent); }
         
-        /* MEHSUL KATALOQU (GRID) */
-        .content-area { flex: 1; min-width: 300px; }
-        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 30px; }
-        .product-card { background: #1e293b; border-radius: 20px; padding: 20px; border: 1px solid #334155; display: flex; flex-direction: column; justify-content: space-between; transition: 0.3s; }
-        .product-card:hover { transform: translateY(-5px); border-color: #38bdf8; box-shadow: 0 10px 25px rgba(56,189,248,0.15); }
-        .product-img-box { width: 100%; height: 200px; border-radius: 14px; margin-bottom: 15px; background: #0f172a; overflow: hidden; display: flex; align-items: center; justify-content: center; border: 1px solid #334155; }
+        .content-area { flex: 1; }
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 30px; }
+        .product-card { background: var(--bg-card); border-radius: 20px; padding: 22px; border: 1px solid var(--border); display: flex; flex-direction: column; justify-content: space-between; position: relative; }
+        .product-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .product-img-box { width: 100%; height: 200px; border-radius: 14px; margin-bottom: 15px; background: var(--bg-main); overflow: hidden; display: flex; align-items: center; justify-content: center; border: 1px solid var(--border); }
         .product-img-box img { width: 100%; height: 100%; object-fit: cover; }
-        .buy-btn { background: #10b981; color: white; border: none; padding: 14px; border-radius: 12px; cursor: pointer; font-weight: 700; width: 100%; margin-top: 15px; transition: 0.2s; }
-        .buy-btn:hover { background: #059669; }
+        .buy-btn { background: #0284c7; color: white; border: none; padding: 14px; border-radius: 12px; cursor: pointer; font-weight: 700; width: 100%; margin-top: 15px; text-align: center; }
+        .buy-btn:hover { background: #0369a1; }
 
-        /* ANALİTİKA VİDCETLƏRİ */
-        .stats-container { display: flex; gap: 20px; margin-bottom: 30px; flex-wrap: wrap; width: 100%; }
-        .stat-card { background: #1e293b; border: 1px solid #334155; padding: 20px; border-radius: 15px; flex: 1; min-width: 200px; }
-        .stat-card p { color: #94a3b8; font-size: 14px; margin-bottom: 5px; }
-        .stat-card h3 { font-size: 24px; color: #38bdf8; }
-
-        /* GİZLİ SATICI GİRİŞİ */
-        .login-box { max-width: 400px; margin: 100px auto; background: #1e293b; padding: 40px; border-radius: 24px; border: 1px solid #334155; box-shadow: 0 10px 40px rgba(0,0,0,0.3); text-align: center; }
-        .form-group { margin-bottom: 20px; text-align: left; }
-        .form-group label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 13px; color: #94a3b8; }
-        .form-group input, .form-group select { width: 100%; padding: 12px; background: #0f172a; border: 1px solid #334155; border-radius: 10px; color: white; outline: none; }
-        .form-group input:focus { border-color: #38bdf8; }
-
-        /* TABLOLAR VƏ MODAL */
-        .panel-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 30px; width: 100%; }
-        .form-card { background: #1e293b; padding: 30px; border-radius: 20px; border: 1px solid #334155; }
-        .admin-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-        .admin-table th, .admin-table td { padding: 12px; text-align: left; border-bottom: 1px solid #334155; font-size: 13px; }
-        .admin-table th { background: #0f172a; color: #38bdf8; }
-        .badge { padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: bold; }
-        .bg-active { background: rgba(16,185,129,0.2); color: #10b981; }
-        .bg-passive { background: rgba(239,68,68,0.2); color: #ef4444; }
+        /* DASHBOARD VƏ YENİ KART STRUKTURU */
+        .stats-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .stat-card { background: var(--bg-card); padding: 25px; border-radius: 18px; border: 1px solid var(--border); position: relative; }
+        .stat-card p { font-size: 13px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; }
+        .stat-card h3 { font-size: 28px; font-weight: 800; margin-top: 5px; }
         
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15,23,42,0.8); justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(5px); }
-        .modal-content { background: #1e293b; padding: 35px; border-radius: 24px; max-width: 480px; width: 92%; border: 1px solid #334155; }
-        .credit-card-zone { background: linear-gradient(135deg, #0284c7, #1e3a8a); color: white; padding: 20px; border-radius: 15px; margin: 20px 0; box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
+        .panel-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 30px; margin-top: 20px; }
+        @media(max-width: 992px) { .panel-grid { grid-template-columns: 1fr; } .main-wrapper { flex-direction: column; } aside { width: 100%; } }
+        
+        .form-card { background: var(--bg-card); padding: 30px; border-radius: 24px; border: 1px solid var(--border); margin-bottom: 25px; }
+        .form-group { margin-bottom: 18px; text-align: left; }
+        .form-group label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 13px; color: var(--text-main); }
+        .form-group input, .form-group select { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 10px; outline: none; background: var(--input-bg); color: var(--text-main); }
+        .form-group input:focus { border-color: var(--accent); }
+        
+        /* SATICI SATIŞ KARTI */
+        .merchant-card-display { background: linear-gradient(135deg, #0f172a, #1e293b); color: white; padding: 22px; border-radius: 16px; margin-top: 15px; border: 1px solid #334155; box-shadow: 0 8px 25px rgba(0,0,0,0.2); }
+        
+        .admin-table { width: 100%; border-collapse: collapse; }
+        .admin-table th, .admin-table td { padding: 14px; text-align: left; border-bottom: 1px solid var(--border); font-size: 13px; }
+        .admin-table th { background: rgba(0,0,0,0.02); color: var(--text-main); font-weight: 700; }
+        
+        .badge { padding: 5px 10px; border-radius: 8px; font-size: 11px; font-weight: 700; display: inline-block; }
+        .bg-active { background: #f0fdf4; color: #16a34a; }
+        .bg-passive { background: #fef2f2; color: #dc2626; }
+        
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(4px); }
+        .modal-content { background: var(--bg-card); padding: 35px; border-radius: 24px; max-width: 500px; width: 92%; max-height: 90vh; overflow-y: auto; border: 1px solid var(--border); }
+        .credit-card-zone { background: linear-gradient(135deg, #1e3a8a, #3b82f6); color: white; padding: 20px; border-radius: 15px; margin: 15px 0; }
+        .file-input-wrapper { position: relative; overflow: hidden; display: inline-block; width: 100%; }
+        .file-input-btn { border: 2px dashed var(--accent); color: var(--accent); background: rgba(56, 189, 248, 0.05); padding: 12px; border-radius: 10px; font-weight: 600; width: 100%; text-align: center; cursor: pointer; display: block; }
+        .file-input-wrapper input[type=file] { font-size: 100px; position: absolute; left: 0; top: 0; opacity: 0; cursor: pointer; }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo" onclick="ekranDegistir('magaza')">🔹 BlueStore</div>
-        <div class="search-container">
-            <input type="text" id="arama-input" placeholder="Məhsul adı ilə axtarış..." onkeyup="kataloqYenile()">
+        <div class="logo" onclick="ekranDegistir('magaza')">🔹 BlueStore Marketplace</div>
+        <div class="header-actions">
+            <button class="admin-btn" id="theme-btn" onclick="toggleTheme()">🌙 Qaranlıq Rejimi</button>
+            <button class="admin-btn" onclick="ekranDegistir('login')" style="background: var(--accent); color: white; border: none;">⚙️ Satıcı Paneli</button>
         </div>
-        <button class="admin-btn" onclick="ekranDegistir('login')">⚙️ Satıcı Paneli</button>
     </header>
 
-    <!-- MAĞAZA ANNA SƏHİFƏ -->
+    <!-- 1. VİTRİN / MAĞAZA EKRANI -->
     <div id="magaza-section" style="display: block;">
+        <div style="background: var(--bg-card); border-bottom: 1px solid var(--border); padding: 15px 6%; display: flex; justify-content: center;">
+            <input type="text" id="arama-input" placeholder="🔍 Arzuladığınız orijinal məhsulu və ya brendi daxil edin..." onkeyup="kataloqYenile()" style="width: 100%; max-width: 600px; padding: 12px 25px; border: 2px solid var(--border); border-radius: 30px; outline: none; background: var(--bg-main); color: var(--text-main);">
+        </div>
         <div class="main-wrapper">
             <aside>
-                <h3>Kateqoriyalar</h3>
-                <button class="filter-link active" onclick="filtirle('all', this)">Bütün Məhsullar</button>
+                <h3>Kataloq Süzgəci</h3>
+                <button class="filter-link active" onclick="filtirle('all', this)">🛍️ Bütün Məhsullar</button>
                 <button class="filter-link" onclick="filtirle('elektronika', this)">📱 Elektronika</button>
-                <button class="filter-link" onclick="filtirle('geyim', this)">👕 Geyim & Deb</button>
-                <button class="filter-link" onclick="filtirle('ev', this)">🏡 Ev & Yaşam</button>
+                <button class="filter-link" onclick="filtirle('geyim', this)">👕 Geyim & Aksesuar</button>
+                <button class="filter-link" onclick="filtirle('ev', this)">🏡 Ev & Həyat</button>
             </aside>
             <main class="content-area">
                 <div class="products-grid" id="mehsul-listesi"></div>
@@ -87,104 +100,113 @@
         </div>
     </div>
 
-    <!-- TAM GİZLİ SATICI GİRİŞİ -->
-    <div id="login-section" style="display: none;">
-        <div class="login-box">
-            <h2 style="color: #38bdf8; margin-bottom: 25px;">Mərkəzi Giriş Sistemi</h2>
-            <div class="form-group">
-                <label>İstifadəçi Adı (Gizli Rejim)</label>
-                <!-- Kənardan görünməməsi üçün input şifrə növündə edilib -->
-                <input type="password" id="admin-user" placeholder="••••••••" autocomplete="off">
-            </div>
-            <div class="form-group">
-                <label>Sistem Şifrəsi (Giriş Kodu)</label>
-                <input type="password" id="admin-pass" placeholder="••••••••" autocomplete="off">
-            </div>
-            <button class="buy-btn" style="background:#38bdf8; color:#0f172a;" onclick="adminGiris()">Doğrula və Daxil Ol</button>
+    <!-- 2. GİZLİ GİRİŞ PANELİ -->
+    <div id="login-section" style="display: none; max-width: 420px; margin: 100px auto; background: var(--bg-card); padding: 40px; border-radius: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.05); border: 1px solid var(--border); text-align: center;">
+        <h2 style="margin-bottom: 8px; font-weight: 800;">Satıcı Giriş Sistemi</h2>
+        <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 25px;">Giriş məlumatları təhlükəsiz şəkildə qorunur.</p>
+        <div class="form-group">
+            <label>İstifadəçi Adı</label>
+            <input type="text" id="admin-user" placeholder="İstifadəçi adınız">
         </div>
+        <div class="form-group">
+            <label>Giriş Şifrəsi</label>
+            <input type="password" id="admin-pass" placeholder="••••••••">
+        </div>
+        <button class="buy-btn" onclick="adminGiris()">Paneli Aktivləşdir</button>
     </div>
-    <!-- SATICI İDARƏETMƏ DASHBOARD-U -->
-    <div id="admin-section" style="display: none; max-width: 1400px; margin: 40px auto; padding: 0 20px;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; flex-wrap: wrap; gap: 15px;">
+    <!-- 3. SATICI PANELİ -->
+    <div id="admin-section" style="display: none; max-width: 1400px; margin: 30px auto; padding: 0 20px;">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 20px; align-items: center;">
             <div>
-                <h2>⚙️ Satıcı İdarəetmə Mərkəzi (Avesta & Kurdoğlu)</h2>
-                <p style="color: #94a3b8; font-size:14px;">Canlı Satış Analitikası, İnventar və Logistika Mərkəzi.</p>
+                <h2>⚙️ Satıcı Paneli Mərkəzi</h2>
+                <p style="color: #64748b; font-size: 14px;">Məlumatlar tam qorunur. Bank kartlarınızı və inventarınızı idarə edin.</p>
             </div>
-            <button class="admin-btn" onclick="ekranDegistir('magaza')">🖥️ Mağazaya Keç</button>
+            <button class="admin-btn" onclick="ekranDegistir('magaza')" style="background: #0284c7; color: white;">🖥️ Mağazaya Dön</button>
         </div>
 
         <div class="stats-container">
-            <div class="stat-card"><p>Ümumi Dövriyyə / Satış</p><h3 id="stat-gelir">0.00 ₼</h3></div>
-            <div class="stat-card"><p>Gələn Sifariş Sayı</p><h3 id="stat-sifaris">0</h3></div>
-            <div class="stat-card"><p>Aktiv İnventar Sayı</p><h3 id="stat-mehsul">0</h3></div>
+            <div class="stat-card"><p>💰 Ümumi Balans (Satışlar)</p><h3 id="stat-gelir">0.00 ₼</h3></div>
+            <div class="stat-card"><p>📦 Aktiv Məhsul Sayı</p><h3 id="stat-mehsul">0</h3></div>
+            <div class="stat-card"><p>💳 Bağlı Bank Kartları</p><h3 id="stat-kart-sayi">0 Kart</h3></div>
         </div>
-
+        
         <div class="panel-grid">
-            <!-- Məhsul Yükləmə Bölməsi -->
-            <div class="form-card" style="height: fit-content;">
-                <h3 id="form-baslik" style="color:#38bdf8; margin-bottom:20px;">📦 Məhsul Yerləşdir</h3>
+            <div class="form-card">
+                <h3 id="form-baslik">📦 Məhsul Yerləşdir / Düzəlt</h3><br>
                 <input type="hidden" id="edit-id">
-                <div class="form-group"><label>Məhsul Adı</label><input type="text" id="p-ad" placeholder="Məs: iPhone 15 Pro Max"></div>
+                <div class="form-group"><label>Məhsulun Adı</label><input type="text" id="p-ad"></div>
                 <div class="form-group">
                     <label>Kateqoriya</label>
                     <select id="p-kat">
                         <option value="elektronika">Elektronika</option>
-                        <option value="geyim">Geyim & Deb</option>
-                        <option value="ev">Ev & Yaşam</option>
+                        <option value="geyim">Geyim</option>
+                        <option value="ev">Ev / Ofis</option>
                     </select>
                 </div>
-                <div class="form-group"><label>Qiymət (₼)</label><input type="number" id="p-qiymet" placeholder="0.00" step="0.01"></div>
-                <div class="form-group"><label>Əsl Şəkil Yüklə (Mütləqdir)</label><input type="file" id="p-resim-file" accept="image/*" onchange="resimSecildi(this)"></div>
-                <button class="buy-btn" id="p-submit-btn" onclick="mehsulYaddaSaxla()">Vitrinə Yerləşdir</button>
-                <button class="admin-btn" id="p-cancel-btn" style="width:100%; margin-top:10px; display:none; background:#ef4444; color:white;" onclick="formuSifirla()">İmtina</button>
+                <div class="form-group"><label>Qiymət (₼)</label><input type="number" id="p-qiymet" step="0.01"></div>
+                <div class="form-group"><label>Əsl Şəkil Seç</label><input type="file" id="p-resim-file" accept="image/*" onchange="resimSecildi(this)"></div>
+                <button class="buy-btn" id="p-submit-btn" onclick="mehsulYaddaSaxla()">Kataloqa Yüklə</button>
+                <button class="admin-btn" id="p-cancel-btn" style="width:100%; margin-top:10px; display:none;" onclick="formuSifirla()">İmtina</button>
             </div>
 
-            <!-- Canlı Sifarişlər Tablosu -->
-            <div class="form-card" style="overflow-x: auto;">
-                <h3 style="color:#38bdf8; margin-bottom:20px;">📥 Sifarişlər və Ödəniş Məlumatları</h3>
-                <table class="admin-table">
-                    <thead><tr><th>Məhsul</th><th>Alıcı Məlumatı</th><th>Metod</th><th>Status</th><th>Logistika</th></tr></thead>
-                    <tbody id="sifaris-listesi"></tbody>
-                </table>
+            <div class="form-card">
+                <h3>💳 Satış Balansı Üçün Bank Kartı Əlavə Et</h3>
+                <p style="color: #64748b; font-size: 13px; margin-bottom: 15px;">Satış qazanclarınız birbaşa bura əlavə etdiyiniz kartın hesabı ilə əlaqələndiriləcək.</p>
+                <div class="form-group"><label>Kart Sahibinin Adı</label><input type="text" id="seller-card-name" placeholder="Məs: ELNUR ALIYEV"></div>
+                <div class="form-group"><label>16 Rəqəmli Kart Nömrəsi</label><input type="text" id="seller-card-num" placeholder="4169 0000 0000 0000" maxlength="19" oninput="formatCard(this)"></div>
+                <div style="display:flex; gap:10px;">
+                    <div class="form-group" style="flex:1;"><label>Son İstifadə (AA/YY)</label><input type="text" id="seller-card-date" placeholder="12/29" maxlength="5"></div>
+                    <div class="form-group" style="flex:1;"><label>CVV/CVC</label><input type="password" id="seller-card-cvv" placeholder="***" maxlength="3"></div>
+                </div>
+                <button class="buy-btn" style="background:#16a34a;" onclick="satıcıKartiElafeEt()">💳 Kartı Sistemə Bağla</button>
+                <div style="margin-top:20px;">
+                    <h4 style="font-size:14px; margin-bottom:10px;">Bağlı Kartlarınız:</h4>
+                    <div id="bagli-kartlar-listesi" style="display:flex; flex-direction:column; gap:8px;"></div>
+                </div>
             </div>
         </div>
 
-        <!-- Məhsul İnventarı -->
-        <div class="form-card" style="margin-top: 40px; overflow-x: auto;">
-            <h3 style="color:#38bdf8; margin-bottom:20px;">📋 Vitrindəki Məhsulların İdarə Olunması</h3>
+        <div style="background: white; padding: 25px; border-radius: 15px; margin-top: 30px; border: 1px solid #e2e8f0; overflow-x: auto;">
+            <h3>📋 Satış Cədvəli & Sifarişlər</h3>
             <table class="admin-table">
-                <thead><tr><th>Şəkil</th><th>Məhsul</th><th>Kateqoriya</th><th>Qiymət</th><th>Vəziyyət</th><th>Əməliyyatlar</th></tr></thead>
+                <thead><tr><th>Məhsul</th><th>Alıcı</th><th>Ödəniş Metodu</th><th>Gələn Məbləğ</th><th>Status</th></tr></thead>
+                <tbody id="sifaris-listesi"></tbody>
+            </table>
+        </div>
+
+        <div style="background: white; padding: 25px; border-radius: 15px; margin-top: 30px; border: 1px solid #e2e8f0; overflow-x: auto;">
+            <h3>📦 Aktiv Vitrin İdarəetməsi</h3>
+            <table class="admin-table">
+                <thead><tr><th>Şəkil</th><th>Məhsul Adı</th><th>Kateqoriya</th><th>Qiymət</th><th>Vitrin</th><th>Əməliyyat</th></tr></thead>
                 <tbody id="admin-mehsul-listesi"></tbody>
             </table>
         </div>
     </div>
 
-    <!-- SİFARİŞ VƏ TƏHLÜKƏSİZ KART ÖDƏNİŞ MODALI -->
+    <!-- MÜŞTƏRİ ÜÇÜN ÖDƏNİŞ MODALI -->
     <div class="modal" id="sifaris-modal">
         <div class="modal-content">
-            <h3 style="color:#38bdf8; margin-bottom:10px;">💳 Təhlükəsiz Ödəniş və Sifariş</h3>
-            <p id="modal-mehsul-ad" style="font-size:13px; color:#94a3b8; margin-bottom:20px; background:#0f172a; padding:10px; border-radius:8px; border:1px solid #334155;"></p>
+            <h3>🔒 Təhlükəsiz SSL Kart Ödənişi</h3><br>
+            <p id="modal-mehsul-ad" style="font-weight: bold; color: #0284c7; background:#e0f2fe; padding:10px; border-radius:8px;"></p><br>
             <input type="hidden" id="modal-mehsul-id">
-            
-            <div class="form-group"><label>Ad Soyad</label><input type="text" id="musteri-ad" placeholder="Kamran Əliyev"></div>
-            <div class="form-group"><label>Çatdırılma Ünvanı</label><input type="text" id="musteri-unvan" placeholder="Bakı şəhəri, S.Vurğun küç. 45"></div>
-            
+            <div class="form-group"><label>Ad Soyad</label><input type="text" id="musteri-ad"></div>
+            <div class="form-group"><label>Çatdırılma Ünvanı</label><input type="text" id="musteri-unvan"></div>
             <div class="credit-card-zone">
-                <div class="form-group" style="margin-bottom:12px;"><label style="color:white;">KARTIN 16 RƏQƏMİ</label><input type="text" id="card-num" placeholder="4169 0000 0000 0000" maxlength="19" oninput="formatCard(this)" style="font-size:16px; letter-spacing:1.5px;"></div>
+                <div class="form-group"><label style="color:white;">Müştəri Kart Nömrəsi</label><input type="text" id="card-num" placeholder="4169 0000 0000 0000" maxlength="19" oninput="formatCard(this)"></div>
                 <div style="display:flex; gap:10px;">
-                    <input type="text" id="card-date" placeholder="AA/YY" maxlength="5" style="width:50%; text-align:center;">
-                    <input type="password" id="card-cvv" placeholder="CVV" maxlength="3" style="width:50%; text-align:center; letter-spacing:3px;">
+                    <input type="text" id="card-date" placeholder="AA/YY" maxlength="5" style="width:50%;">
+                    <input type="password" id="card-cvv" placeholder="CVV" maxlength="3" style="width:50%;">
                 </div>
             </div>
             <div style="display: flex; gap: 10px;">
-                <button class="admin-btn" style="flex:1; background:#475569; color:white;" onclick="modalBagla()">Ləğv Et</button>
-                <button class="buy-btn" style="flex:1; margin-top:0;" onclick="sifarisiTamamla()">Ödəniş Et və Sifariş Ver</button>
+                <button class="admin-btn" style="flex: 1;" onclick="modalBagla()">İmtina</button>
+                <button class="buy-btn" style="flex: 1; background: #16a34a; margin-top:0;" onclick="sifarisiTamamla()">Ödəniş Et</button>
             </div>
         </div>
     </div>
 
     <script>
-        let mehsullar = []; let sifarisler = []; let secilenResimData = ""; let aktivKategoriya = "all";
+        let mehsullar = []; let sifarisler = []; let saticikartlari = []; let secilenResimData = ""; let aktivKategoriya = "all";
 
         function resimSecildi(input) {
             if (input.files && input.files[0]) {
@@ -196,9 +218,11 @@
 
         function formatCard(input) {
             let v = input.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
-            let matches = v.match(/\d{4,16}/g); let match = matches && matches[0] || ''; let parts = [];
+            let matches = v.match(/\d{4,16}/g);
+            let match = matches && matches[0] || '';
+            let parts = [];
             for (let i=0, len=match.length; i<len; i+=4) { parts.push(match.substring(i, i+4)); }
-            input.value = parts.length > 0 ? parts.join(' ') : v;
+            if (parts.length > 0) { input.value = parts.join(' '); } else { input.value = v; }
         }
 
         function ekranDegistir(ekran) {
@@ -210,19 +234,27 @@
             if(ekran === 'admin') { document.getElementById('admin-section').style.display = 'block'; adminPaneliYenile(); }
         }
 
-        // TƏHLÜKƏSİZ GİRİŞ ALQORİTMİ
         function adminGiris() {
-            const user = document.getElementById('admin-user').value.trim();
-            const pass = document.getElementById('admin-pass').value.trim();
-            
-            // İstifadəçi adı: avesta | Şifrə: kurdoglu
-            if(user === "avesta" && pass === "kurdoglu") {
+            const u = document.getElementById('admin-user').value.trim();
+            const p = document.getElementById('admin-pass').value;
+            if(u === "avesta" && p === "kurdoglu") {
                 ekranDegistir('admin');
                 document.getElementById('admin-user').value = "";
                 document.getElementById('admin-pass').value = "";
-            } else { 
-                alert("❌ Giriş rədd edildi! Kimlik məlumatları xətalıdır."); 
-            }
+            } else { alert("Məlumatlar xətalıdır!"); }
+        }
+
+        function satıcıKartiElafeEt() {
+            const name = document.getElementById('seller-card-name').value.trim();
+            const num = document.getElementById('seller-card-num').value.trim();
+            const date = document.getElementById('seller-card-date').value.trim();
+            const cvv = document.getElementById('seller-card-cvv').value.trim();
+
+            if(!name || num.length < 19 || !date || cvv.length < 3) { alert("Məlumatları tam daxil edin!"); return; }
+            saticikartlari.push({ name: name, num: num, date: date });
+            alert("💳 Kartınız uğurla bağlandı!");
+            document.getElementById('seller-card-name').value = ""; document.getElementById('seller-card-num').value = ""; document.getElementById('seller-card-date').value = ""; document.getElementById('seller-card-cvv').value = "";
+            adminPaneliYenile();
         }
 
         function filtirle(kat, element) {
@@ -237,16 +269,16 @@
             const filtrli = mehsullar.filter(p => p.aktiv && (aktivKategoriya === "all" || p.kat === aktivKategoriya) && p.ad.toLowerCase().includes(txt));
 
             if(filtrli.length === 0) {
-                grid.innerHTML = `<p style="grid-column:1/-1; text-align:center; color:#94a3b8; padding:40px;">Mağazada məhsul yoxdur. Satıcı panelindən daxil olub həqiqi şəkillərlə satışa məhsul əlavə edin.</p>`;
+                grid.innerHTML = `<p style="grid-column:1/-1; text-align:center; color:#64748b; padding:40px;">Mağaza hazırda boşdur. Satıcı panelindən məhsul yükləyin.</p>`;
                 return;
             }
             filtrli.forEach(p => {
                 grid.innerHTML += `
                     <div class="product-card">
                         <div class="product-img-box"><img src="${p.resim}"></div>
-                        <h4 style="margin-bottom:10px;">${p.ad}</h4>
-                        <div style="font-size:20px; font-weight:bold; color:#38bdf8;">${p.qiymet.toFixed(2)} ₼</div>
-                        <button class="buy-btn" onclick="sifarisPencerasiAc(${p.id})">Sürətli Al (Kartla)</button>
+                        <h4>${p.ad}</h4><br>
+                        <div style="font-size:18px; font-weight:bold; color:#0284c7;">${p.qiymet.toFixed(2)} ₼</div>
+                        <button class="buy-btn" onclick="sifarisPencerasiAc(${p.id})">Kartla Al</button>
                     </div>`;
             });
         }
@@ -257,7 +289,7 @@
             const q = parseFloat(document.getElementById('p-qiymet').value);
             const editId = document.getElementById('edit-id').value;
 
-            if(!ad || isNaN(q) || q <= 0) { alert("Məlumatları düzgün yazın!"); return; }
+            if(!ad || isNaN(q) || q <= 0) { alert("Məlumatları düzgün daxil edin!"); return; }
 
             if(editId) {
                 const idx = mehsullar.findIndex(x => x.id == editId);
@@ -265,9 +297,9 @@
                 if(secilenResimData) mehsullar[idx].resim = secilenResimData;
                 alert("Məhsul yeniləndi!");
             } else {
-                if(!secilenResimData) { alert("Zəhmət olmasa cihazınızdan əsl şəkil seçin!"); return; }
+                if(!secilenResimData) { alert("Real şəkil seçin!"); return; }
                 mehsullar.push({ id: Date.now(), ad: ad, kat: kat, qiymet: q, resim: secilenResimData, aktiv: true });
-                alert("Məhsul vitrinə yerləşdirildi və satışa çıxarıldı!");
+                alert("Məhsul satışa çıxarıldı!");
             }
             formuSifirla(); kataloqYenile(); adminPaneliYenile();
         }
@@ -279,7 +311,7 @@
             document.getElementById('p-kat').value = p.kat;
             document.getElementById('p-qiymet').value = p.qiymet;
             document.getElementById('form-baslik').innerText = "📝 Məhsulu Redaktə Et";
-            document.getElementById('p-submit-btn').innerText = "Dəyişiklikləri Saxla";
+            document.getElementById('p-submit-btn').innerText = "Dəyişikliyi Saxla";
             document.getElementById('p-cancel-btn').style.display = "block";
         }
 
@@ -295,44 +327,43 @@
 
         function formuSifirla() {
             document.getElementById('edit-id').value = ""; document.getElementById('p-ad').value = ""; document.getElementById('p-qiymet').value = ""; document.getElementById('p-resim-file').value = "";
-            secilenResimData = ""; document.getElementById('form-baslik').innerText = "📦 Məhsul Yerləşdir"; document.getElementById('p-submit-btn').innerText = "Vitrinə Yerləşdir"; document.getElementById('p-cancel-btn').style.display = "none";
+            secilenResimData = ""; document.getElementById('form-baslik').innerText = "Yeni Məhsul Yerləşdir"; document.getElementById('p-submit-btn').innerText = "Kataloqa Yüklə"; document.getElementById('p-cancel-btn').style.display = "none";
         }
 
-        function sifarisStatusDeyis(idx, status) { sifarisler[idx].status = status; adminPaneliYenile(); }
-
         function adminPaneliYenile() {
-            let total = 0; sifarisler.forEach(s => { if(s.status !== 'Ləğv edilib') total += s.qiymet; });
+            let total = 0; sifarisler.forEach(s => total += s.qiymet);
             document.getElementById('stat-gelir').innerText = total.toFixed(2) + " ₼";
-            document.getElementById('stat-sifaris').innerText = sifarisler.length;
             document.getElementById('stat-mehsul').innerText = mehsullar.length;
+            document.getElementById('stat-kart-sayi').innerText = saticikartlari.length + " Kart";
+
+            const kList = document.getElementById('bagli-kartlar-listesi'); kList.innerHTML = "";
+            if(saticikartlari.length === 0) kList.innerHTML = "<p style='font-size:12px; color:orange;'>Hələ kart bağlanmayıb.</p>";
+            saticikartlari.forEach(k => {
+                kList.innerHTML += `<div style="background:#f1f5f9; padding:10px; border-radius:8px; font-size:12px; border-left:4px solid #16a34a;">
+                    💳 <b>${k.num.substring(0,7)}**** **** ${k.num.substring(15)}</b> | ${k.name}
+                </div>`;
+            });
 
             const mList = document.getElementById('admin-mehsul-listesi'); mList.innerHTML = "";
             mehsullar.forEach(p => {
                 mList.innerHTML += `<tr>
-                    <td><img src="${p.resim}" style="width:40px;height:40px;object-fit:cover;border-radius:6px;"></td>
-                    <td><b>${p.ad}</b></td><td>${p.kat.toUpperCase()}</td><td>${p.qiymet.toFixed(2)} ₼</td>
+                    <td><img src="${p.resim}" style="width:35px;height:35px;object-fit:cover;border-radius:4px;"></td>
+                    <td><b>${p.ad}</b></td><td>${p.kat}</td><td>${p.qiymet.toFixed(2)} ₼</td>
                     <td><span class="badge ${p.aktiv?'bg-active':'bg-passive'}">${p.aktiv?'Aktiv':'Gizli'}</span></td>
                     <td>
-                        <button class="action-btn" style="background:#0284c7;color:white;padding:3px 7px;border:none;border-radius:4px;cursor:pointer;" onclick="mehsulRedakteEt(${p.id})">Düzəlt</button>
-                        <button class="action-btn" style="background:#475569;color:white;padding:3px 7px;border:none;border-radius:4px;cursor:pointer;" onclick="mehsulStatusDeyis(${p.id})">${p.aktiv?'Gizlə':'Aç'}</button>
-                        <button class="action-btn" style="background:#ef4444;color:white;padding:3px 7px;border:none;border-radius:4px;cursor:pointer;" onclick="mehsulSil(${p.id})">Sil</button>
+                        <button class="action-btn" style="background:#e0f2fe; color:#0369a1;" onclick="mehsulRedakteEt(${p.id})">Düzəlt</button>
+                        <button class="action-btn" style="background:#f1f5f9;" onclick="mehsulStatusDeyis(${p.id})">${p.aktiv?'Gizlə':'Aktiv'}</button>
+                        <button class="action-btn" style="background:#fef2f2;color:red;" onclick="mehsulSil(${p.id})">Sil</button>
                     </td>
                 </tr>`;
             });
 
             const sList = document.getElementById('sifaris-listesi'); sList.innerHTML = "";
-            sifarisler.forEach((s, i) => {
+            sifarisler.forEach(s => {
                 sList.innerHTML += `<tr>
-                    <td><b>${s.mehsul}</b><br><small style="color:#94a3b8;">${s.qiymet.toFixed(2)} ₼</small></td>
-                    <td><b>${s.alici}</b><br><small style="color:#94a3b8;">${s.unvan}</small></td><td>${s.metod}</td>
-                    <td><span style="color:#38bdf8; font-weight:bold;">${s.status}</span></td>
-                    <td>
-                        <select onchange="sifarisStatusDeyis(${i}, this.value)" style="background:#0f172a; color:white; border:1px solid #334155; padding:4px; border-radius:5px;">
-                            <option value="Ödənildi" ${s.status==='Ödənildi'?'selected':''}>Ödənildi</option>
-                            <option value="Kuryerdə" ${s.status==='Kuryerdə'?'selected':''}>Kuryerdə</option>
-                            <option value="Çatdırıldı" ${s.status==='Çatdırıldı'?'selected':''}>Çatdırıldı</option>
-                        </select>
-                    </td>
+                    <td><b>${s.mehsul}</b></td><td>${s.alici}<br><small>${s.unvan}</small></td><td>${s.metod}</td>
+                    <td><b style="color:#16a34a;">+${s.qiymet.toFixed(2)} ₼</b></td>
+                    <td><span style="color:#16a34a;font-weight:bold;">🟢 Ödənildi</span></td>
                 </tr>`;
             });
         }
@@ -340,7 +371,7 @@
         function sifarisPencerasiAc(id) {
             const p = mehsullar.find(x => x.id === id);
             document.getElementById('modal-mehsul-id').value = p.id;
-            document.getElementById('modal-mehsul-ad').innerText = `Məhsul: ${p.ad} | Ödəniləcək: ${p.qiymet.toFixed(2)} ₼`;
+            document.getElementById('modal-mehsul-ad').innerText = `Məhsul: ${p.ad} | Ödəniş: ${p.qiymet.toFixed(2)} ₼`;
             document.getElementById('sifaris-modal').style.display = 'flex';
         }
         function modalBagla() { document.getElementById('sifaris-modal').style.display = 'none'; }
@@ -348,10 +379,12 @@
         function sifarisiTamamla() {
             const id = document.getElementById('modal-mehsul-id').value; const p = mehsullar.find(x => x.id == id);
             const ad = document.getElementById('musteri-ad').value.trim(); const unvan = document.getElementById('musteri-unvan').value.trim(); const card = document.getElementById('card-num').value.trim();
-            if(!ad || !unvan || card.length < 19) { alert("Məlumatları və kart nömrəsini tam doldurun!"); return; }
-            sifarisler.push({ mehsul: p.ad, qiymet: p.qiymet, alici: ad, unvan: unvan, metod: "💳 Kart (Təsdiqli)", status: "Ödənildi" });
-            alert("🔒 Ödəniş və Satış müvəffəqiyyətlə icra olundu! Sifariş satıcı dashboard-una əlavə edildi."); modalBagla();
+            if(!ad || !unvan || card.length < 19) { alert("Məlumatları tam doldurun!"); return; }
+            
+            sifarisler.push({ mehsul: p.ad, qiymet: p.qiymet, alici: ad, unvan: unvan, metod: "💳 Kart", status: "Ödənildi" });
+            alert("🔒 Ödəniş uğurludur!"); modalBagla();
             document.getElementById('musteri-ad').value = ""; document.getElementById('musteri-unvan').value = ""; document.getElementById('card-num').value = "";
+            kataloqYenile();
         }
         kataloqYenile();
     </script>
